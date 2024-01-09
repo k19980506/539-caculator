@@ -57,6 +57,14 @@ div > div > div {
 	width: 100%;
 }
 
+.reset {
+	background-color: #ff3333;
+}
+
+.reset:hover {
+	background-color: #e60000;
+}
+
 div > div > div button {
 	background-color: #ff3333;
 }
@@ -102,4 +110,12 @@ div > div > div > div button:hover {
 
 .detail {
 	flex-direction: column;
+}
+
+.option {
+	display: block;
+}
+
+.option > div {
+	justify-content: center;
 }

@@ -40,12 +40,14 @@ function App() {
     });
 
     clientTotal =
-      clientCarTotal + price * (totalPairs + totalTriplets + totalQuads);
+      clientCarTotal + price * (pairsTotal + tripletsTotal + quadsTotal);
     costTotal =
       costCarTotal +
-      Math.ceil(72.55 * totalPairs) +
-      Math.ceil(63.8 * totalTriplets) +
-      52 * totalQuads;
+      Math.ceil(72.55 * pairsTotal) +
+      Math.ceil(63.8 * tripletsTotal) +
+      52 * quadsTotal;
+
+	console.log(clientTotal)
 
     setTotalClientCost(clientTotal);
     setTotalCost(costTotal);
@@ -133,7 +135,7 @@ function App() {
 
   let customStarAmount = price * (totalPairs + totalTriplets + totalQuads);
   let customCarAmount = "0";
-  let carList = items.filter((item) => item.type == "車");
+  let carList = items.filter((item) => item.type === "車");
 
   customCarAmount =
     carList.length > 0 ? carList.map((item) => item.total).join("+") : "0";
@@ -421,7 +423,7 @@ function App() {
       <div>
         {items.map((item, index) => (
           <div key={index}>
-            <p>{`${item.type} - 球數：${item.unit}，客本：${item.total}，支數：${item.quantity}`}</p>
+            <p>{`${item.type} - 球數：${item.unit}，支數：${item.quantity}`}</p>
             <button onClick={() => removeItem(index)}>刪除</button>
           </div>
         ))}
@@ -456,7 +458,7 @@ function App() {
             {customStarAmount > 0 && customCarAmount !== "0" ? (
               <a>{`${customStarAmount}+${customCarAmount}=${totalClientCost}`}</a>
             ) : customStarAmount > 0 && customCarAmount === "0" ? (
-              <a>{`${totalClientCost}`}</a>
+              <a>{`${customStarAmount}`}</a>
             ) : customStarAmount === 0 && customCarAmount !== "0" ? (
               <a>{`${customCarAmount}=${totalClientCost}`}</a>
             ) : null}

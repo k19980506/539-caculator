@@ -76,7 +76,7 @@ function App() {
         Math.ceil(price * quads * quantity);
       pairsCost = Math.ceil(71.55 * pairs * quantity);
       tripletsCost = Math.ceil(63.8 * triplets * quantity);
-      quadsCost = 52 * quads * quantity;
+      quadsCost = Math.ceil(52 * quads * quantity);
       cost = pairsCost + tripletsCost + quadsCost;
     } else {
       total = Math.ceil(price * 38 * unit * quantity);
@@ -398,7 +398,7 @@ function App() {
                 </React.Fragment>
               )
             )}
-            {customTotalList === "0" ? null : (
+            {items.length === 0 ? null : items.length === 1 ? <span>{`${totalClientCost}`}</span> : (
               <span>{`${customTotalList}=${totalClientCost}`}</span>
             )}
           </div>
@@ -424,7 +424,7 @@ function App() {
                     <span>{`63.8 * ${item.triplets} * ${item.quantity} = ${item.tripletsCost}`}</span>
                   )}
                   {item.quads === 0 ? null : (
-                    <span>{`52 * ${item.quads} = ${item.quadsCost}`}</span>
+                    <span>{`52 * ${item.quads} * ${item.quantity} = ${item.quadsCost}`}</span>
                   )}
                   <span>
                     {[item.pairsCost, item.tripletsCost, item.quadsCost].filter(
@@ -438,7 +438,7 @@ function App() {
                 </React.Fragment>
               )
             )}
-            {costTotalList === "0" ? null : (
+            {items.length === 0 ? null : items.length === 1 ? <span>{`${totalCost}`}</span> : (
               <span>{`${costTotalList}=${totalCost}`}</span>
             )}
           </div>

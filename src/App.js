@@ -17,43 +17,19 @@ function App() {
   const [items, setItems] = useState([]);
   const [totalClientCost, setTotalClientCost] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
-  const [totalPairs, setTotalPairs] = useState(0);
-  const [totalTriplets, setTotalTriplets] = useState(0);
-  const [totalQuads, setTotalQuads] = useState(0);
   const [price, setPrice] = useState(78);
 
   useEffect(() => {
-    let clientCarTotal = 0;
     let clientTotal = 0;
-    let costCarTotal = 0;
     let costTotal = 0;
-    let pairsTotal = 0;
-    let tripletsTotal = 0;
-    let quadsTotal = 0;
 
     items.forEach((item) => {
-      clientCarTotal += item.total;
-      costCarTotal += item.cost;
-      pairsTotal += item.pairs * item.quantity;
-      tripletsTotal += item.triplets * item.quantity;
-      quadsTotal += item.quads * item.quantity;
+      clientTotal += item.total;
+      costTotal += item.cost;
     });
-
-    clientTotal =
-      clientCarTotal + price * (pairsTotal + tripletsTotal + quadsTotal);
-    costTotal =
-      costCarTotal +
-      Math.ceil(72.55 * pairsTotal) +
-      Math.ceil(63.8 * tripletsTotal) +
-      52 * quadsTotal;
-
-	console.log(clientTotal)
 
     setTotalClientCost(clientTotal);
     setTotalCost(costTotal);
-    setTotalPairs(pairsTotal);
-    setTotalTriplets(tripletsTotal);
-    setTotalQuads(quadsTotal);
   }, [items]);
 
   const addItem = (type, unit, quantity) => {
@@ -62,40 +38,46 @@ function App() {
     let pairs = 0;
     let triplets = 0;
     let quads = 0;
+    let pairsCost = 0;
+    let tripletsCost = 0;
+    let quadsCost = 0;
 
     if (type === "2星") {
       pairs = combination(unit, 2);
-      //   total = Math.ceil(price * pairs * quantity);
-      //   cost = Math.ceil(72.55 * pairs * quantity);
+      total = Math.ceil(price * pairs * quantity);
+      pairsCost = Math.ceil(71.55 * pairs * quantity);
+      cost = pairsCost;
     } else if (type === "3星") {
       pairs = combination(unit, 3);
-      //   total = Math.ceil(price * pairs * quantity);
-      //   cost = Math.ceil(63.8 * pairs * quantity);
+      total = Math.ceil(price * pairs * quantity);
+      tripletsCost = Math.ceil(63.8 * pairs * quantity);
+      cost = tripletsCost;
     } else if (type === "4星") {
       pairs = combination(unit, 4);
-      //   total = Math.ceil(price * pairs * quantity);
-      //   cost = 52 * pairs * quantity;
+      total = Math.ceil(price * pairs * quantity);
+      quadsCost = 52 * pairs * quantity;
+      cost = quadsCost;
     } else if (type === "23星") {
       pairs = combination(unit, 2);
       triplets = combination(unit, 3);
-      //   total =
-      //     Math.ceil(price * pairs * quantity) +
-      //     Math.ceil(price * triplets * quantity);
-      //   cost =
-      //     Math.ceil(72.55 * pairs * quantity) +
-      //     Math.ceil(63.8 * triplets * quantity);
+      total =
+        Math.ceil(price * pairs * quantity) +
+        Math.ceil(price * triplets * quantity);
+      pairsCost = Math.ceil(71.55 * pairs * quantity);
+      tripletsCost = Math.ceil(63.8 * triplets * quantity);
+      cost = pairsCost + tripletsCost;
     } else if (type === "234星") {
       pairs = combination(unit, 2);
       triplets = combination(unit, 3);
       quads = combination(unit, 4);
-      //   total =
-      //     Math.ceil(price * pairs * quantity) +
-      //     Math.ceil(price * triplets * quantity) +
-      //     Math.ceil(price * quads * quantity);
-      //   cost =
-      //     Math.ceil(72.55 * pairs * quantity) +
-      //     Math.ceil(63.8 * triplets * quantity) +
-      //     52 * quads * quantity;
+      total =
+        Math.ceil(price * pairs * quantity) +
+        Math.ceil(price * triplets * quantity) +
+        Math.ceil(price * quads * quantity);
+      pairsCost = Math.ceil(71.55 * pairs * quantity);
+      tripletsCost = Math.ceil(63.8 * triplets * quantity);
+      quadsCost = 52 * quads * quantity;
+      cost = pairsCost + tripletsCost + quadsCost;
     } else {
       total = Math.ceil(price * 38 * unit * quantity);
       cost = Math.ceil(2719 * unit * quantity);
@@ -111,6 +93,9 @@ function App() {
       triplets,
       quads,
       total,
+      pairsCost,
+      tripletsCost,
+      quadsCost,
     };
     setItems([...items, newItem]);
   };
@@ -133,18 +118,10 @@ function App() {
     });
   };
 
-  let customStarAmount = price * (totalPairs + totalTriplets + totalQuads);
-  let customCarAmount = "0";
-  let carList = items.filter((item) => item.type === "車");
-
-  customCarAmount =
-    carList.length > 0 ? carList.map((item) => item.total).join("+") : "0";
-
-  let twoStarCost = Math.ceil(72.55 * totalPairs);
-  let threeStarCost = Math.ceil(63.8 * totalTriplets);
-  let fourStarCost = 52 * totalQuads;
-  let carCost =
-    carList.length > 0 ? carList.map((item) => item.cost).join("+") : "0";
+  let customTotalList =
+    items.length > 0 ? items.map((item) => item.total).join("+") : "0";
+  let costTotalList =
+    items.length > 0 ? items.map((item) => item.cost).join("+") : "0";
 
   return (
     <div className="App">
@@ -186,7 +163,6 @@ function App() {
             </th>
             <th>
               <label>{price}</label>
-              {/* <input id="carClientCost" type="number" defaultValue={price} step="1" /> */}
             </th>
             <th>
               <input id="carQuantity" type="number" defaultValue={1} step="1" />
@@ -212,12 +188,6 @@ function App() {
             </th>
             <th>
               <label>{price}</label>
-              {/* <input
-                id="twoStarClientCost"
-                type="number"
-                defaultValue={price}
-                step="1"
-              /> */}
             </th>
             <th>
               <input
@@ -253,12 +223,6 @@ function App() {
             </th>
             <th>
               <label>{price}</label>
-              {/* <input
-                id="threeStarClientCost"
-                type="number"
-                defaultValue={price}
-                step="1"
-              /> */}
             </th>
             <th>
               <input
@@ -296,12 +260,6 @@ function App() {
             </th>
             <th>
               <label>{price}</label>
-              {/* <input
-                id="fourStarClientCost"
-                type="number"
-                defaultValue={price}
-                step="1"
-              /> */}
             </th>
             <th>
               <input
@@ -339,12 +297,6 @@ function App() {
             </th>
             <th>
               <label>{price}</label>
-              {/* <input
-                id="twentyThreeStarClientCost"
-                type="number"
-                defaultValue={price}
-                step="1"
-              /> */}
             </th>
             <th>
               <input
@@ -384,12 +336,6 @@ function App() {
             </th>
             <th>
               <label>{price}</label>
-              {/* <input
-                id="twoThreeFourStarClientCost"
-                type="number"
-                defaultValue={price}
-                step="1"
-              /> */}
             </th>
             <th>
               <input
@@ -431,78 +377,69 @@ function App() {
 
       <div className="totals-container">
         <div className="detail">
-          <a>{`客本：${totalClientCost}`}</a>
+          <span>{`客本：${totalClientCost}`}</span>
           <div className="detail">
-            {items.map((item, index) => (
-              <a
-                key={index}
-              >{`${item.unit} * ${item.type} * ${item.quantity}`}</a>
-            ))}
-            {totalPairs === 0 ? null : <a>{`兩星：${totalPairs}碰`}</a>}
-            {totalTriplets === 0 ? null : <a>{`三星：${totalTriplets}碰`}</a>}
-            {totalQuads === 0 ? null : <a>{`四星：${totalQuads}碰`}</a>}
-            {totalPairs + totalTriplets + totalQuads == 0 ? null : (
-              <a>{`${price} * ${totalPairs + totalTriplets + totalQuads} = ${
-                price * (totalPairs + totalTriplets + totalQuads)
-              }`}</a>
+            {items.map((item) =>
+              item.type === "車" ? (
+                <span>{`${price} * 38 * ${item.unit} * ${item.quantity} = ${item.total}`}</span>
+              ) : (
+                <React.Fragment>
+                  <span>{`${item.unit} * ${item.type} * ${item.quantity}`}</span>
+                  <span>
+                    {item.pairs === 0 ? null : `兩星：${item.pairs}碰 `}
+                    {item.triplets === 0 ? null : `三星：${item.triplets}碰 `}
+                    {item.quads === 0 ? null : `四星：${item.quads}碰`}
+                  </span>
+                  <span>
+                    {`${price} * ${item.pairs + item.triplets + item.quads} * ${
+                      item.quantity
+                    } = ${item.total}`}
+                  </span>
+                </React.Fragment>
+              )
             )}
-
-            {items
-              .filter((item) => item.type === "車")
-              .map((item, index) => (
-                <a
-                  key={index}
-                >{`${price} * 38 * ${item.unit} * ${item.quantity} = ${item.total}`}</a>
-              ))}
-
-            {customStarAmount > 0 && customCarAmount !== "0" ? (
-              <a>{`${customStarAmount}+${customCarAmount}=${totalClientCost}`}</a>
-            ) : customStarAmount > 0 && customCarAmount === "0" ? (
-              <a>{`${customStarAmount}`}</a>
-            ) : customStarAmount === 0 && customCarAmount !== "0" ? (
-              <a>{`${customCarAmount}=${totalClientCost}`}</a>
-            ) : null}
+            {customTotalList === "0" ? null : (
+              <span>{`${customTotalList}=${totalClientCost}`}</span>
+            )}
           </div>
         </div>
         <div className="detail">
           <p>{`成本：${totalCost}`}</p>
           <div className="detail">
-            {items.map((item, index) => (
-              <a
-                key={index}
-              >{`${item.unit} * ${item.type} * ${item.quantity}`}</a>
-            ))}
-            {totalPairs === 0 ? null : <a>{`兩星：${totalPairs}碰`}</a>}
-            {totalTriplets === 0 ? null : <a>{`三星：${totalTriplets}碰`}</a>}
-            {totalQuads === 0 ? null : <a>{`四星：${totalQuads}碰`}</a>}
-            {totalPairs === 0 ? null : (
-              <a>{`72.55 * ${totalPairs} = ${Math.ceil(
-                72.55 * totalPairs
-              )}`}</a>
+            {items.map((item) =>
+              item.type === "車" ? (
+                <span>{`2719 * ${item.unit} * ${item.quantity} = ${item.cost}`}</span>
+              ) : (
+                <React.Fragment>
+                  <span>{`${item.unit} * ${item.type} * ${item.quantity}`}</span>
+                  <span>
+                    {item.pairs === 0 ? null : `兩星：${item.pairs}碰 `}
+                    {item.triplets === 0 ? null : `三星：${item.triplets}碰 `}
+                    {item.quads === 0 ? null : `四星：${item.quads}碰`}
+                  </span>
+                  {item.pairs === 0 ? null : (
+                    <span>{`71.55 * ${item.pairs} * ${item.quantity} = ${item.pairsCost}`}</span>
+                  )}
+                  {item.triplets === 0 ? null : (
+                    <span>{`63.8 * ${item.triplets} * ${item.quantity} = ${item.tripletsCost}`}</span>
+                  )}
+                  {item.quads === 0 ? null : (
+                    <span>{`52 * ${item.quads} = ${item.quadsCost}`}</span>
+                  )}
+                  <span>
+                    {[item.pairsCost, item.tripletsCost, item.quadsCost].filter(
+                      (cost) => cost !== 0
+                    ).length > 1
+                      ? `${[item.pairsCost, item.tripletsCost, item.quadsCost]
+                          .filter((cost) => cost !== 0)
+                          .join("+")}=${item.cost}`
+                      : null}
+                  </span>
+                </React.Fragment>
+              )
             )}
-            {totalTriplets === 0 ? null : (
-              <a>{`63.8 * ${totalTriplets} = ${Math.ceil(
-                63.8 * totalTriplets
-              )}`}</a>
-            )}
-            {totalQuads === 0 ? null : (
-              <a>{`52 * ${totalQuads} = ${52 * totalQuads}`}</a>
-            )}
-            {items
-              .filter((item) => item.type === "車")
-              .map((item, index) => (
-                <a
-                  key={index}
-                >{`2719 * ${item.unit} * ${item.quantity} = ${item.cost}`}</a>
-              ))}
-            {totalCost === 0 ? null : (
-              <a>
-                {totalPairs === 0 ? null : `${twoStarCost}`}
-                {totalTriplets === 0 ? null : `+${threeStarCost}`}
-                {totalQuads === 0 ? null : `+${fourStarCost}`}
-                {carCost === "0" ? null : `+${carCost}`}
-                {`=${totalCost}`}
-              </a>
+            {costTotalList === "0" ? null : (
+              <span>{`${costTotalList}=${totalCost}`}</span>
             )}
           </div>
         </div>

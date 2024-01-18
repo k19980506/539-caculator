@@ -50,12 +50,12 @@ function App() {
     } else if (type === "3星") {
       pairs = combination(unit, 3);
       total = Math.ceil(price * pairs * quantity);
-      tripletsCost = Math.ceil(63.8 * pairs * quantity);
+      tripletsCost = Math.ceil(62.8 * pairs * quantity);
       cost = tripletsCost;
     } else if (type === "4星") {
       pairs = combination(unit, 4);
       total = Math.ceil(price * pairs * quantity);
-      quadsCost = 52 * pairs * quantity;
+      quadsCost = 51 * pairs * quantity;
       cost = quadsCost;
     } else if (type === "23星") {
       pairs = combination(unit, 2);
@@ -64,7 +64,7 @@ function App() {
         Math.ceil(price * pairs * quantity) +
         Math.ceil(price * triplets * quantity);
       pairsCost = Math.ceil(71.55 * pairs * quantity);
-      tripletsCost = Math.ceil(63.8 * triplets * quantity);
+      tripletsCost = Math.ceil(62.8 * triplets * quantity);
       cost = pairsCost + tripletsCost;
     } else if (type === "234星") {
       pairs = combination(unit, 2);
@@ -75,8 +75,8 @@ function App() {
         Math.ceil(price * triplets * quantity) +
         Math.ceil(price * quads * quantity);
       pairsCost = Math.ceil(71.55 * pairs * quantity);
-      tripletsCost = Math.ceil(63.8 * triplets * quantity);
-      quadsCost = Math.ceil(52 * quads * quantity);
+      tripletsCost = Math.ceil(62.8 * triplets * quantity);
+      quadsCost = Math.ceil(51 * quads * quantity);
       cost = pairsCost + tripletsCost + quadsCost;
     } else {
       total = Math.ceil(price * 38 * unit * quantity);
@@ -398,7 +398,9 @@ function App() {
                 </React.Fragment>
               )
             )}
-            {items.length === 0 ? null : items.length === 1 ? <span>{`${totalClientCost}`}</span> : (
+            {items.length === 0 ? null : items.length === 1 ? (
+              <span>{`${totalClientCost}`}</span>
+            ) : (
               <span>{`${customTotalList}=${totalClientCost}`}</span>
             )}
           </div>
@@ -421,10 +423,10 @@ function App() {
                     <span>{`71.55 * ${item.pairs} * ${item.quantity} = ${item.pairsCost}`}</span>
                   )}
                   {item.triplets === 0 ? null : (
-                    <span>{`63.8 * ${item.triplets} * ${item.quantity} = ${item.tripletsCost}`}</span>
+                    <span>{`62.8 * ${item.triplets} * ${item.quantity} = ${item.tripletsCost}`}</span>
                   )}
                   {item.quads === 0 ? null : (
-                    <span>{`52 * ${item.quads} * ${item.quantity} = ${item.quadsCost}`}</span>
+                    <span>{`51 * ${item.quads} * ${item.quantity} = ${item.quadsCost}`}</span>
                   )}
                   <span>
                     {[item.pairsCost, item.tripletsCost, item.quadsCost].filter(
@@ -438,7 +440,9 @@ function App() {
                 </React.Fragment>
               )
             )}
-            {items.length === 0 ? null : items.length === 1 ? <span>{`${totalCost}`}</span> : (
+            {items.length === 0 ? null : items.length === 1 ? (
+              <span>{`${totalCost}`}</span>
+            ) : (
               <span>{`${costTotalList}=${totalCost}`}</span>
             )}
           </div>

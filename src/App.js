@@ -50,12 +50,12 @@ function App() {
     } else if (type === "3星") {
       triplets = combination(unit, 3);
       total = Math.ceil(price * pairs * quantity);
-      tripletsCost = Math.ceil(62.8 * pairs * quantity);
+      tripletsCost = Math.ceil(62.8 * triplets * quantity);
       cost = tripletsCost;
     } else if (type === "4星") {
       quads = combination(unit, 4);
       total = Math.ceil(price * pairs * quantity);
-      quadsCost = 51 * pairs * quantity;
+      quadsCost = 51 * quads * quantity;
       cost = quadsCost;
     } else if (type === "23星") {
       pairs = combination(unit, 2);

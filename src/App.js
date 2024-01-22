@@ -48,12 +48,12 @@ function App() {
       pairsCost = Math.ceil(71.55 * pairs * quantity);
       cost = pairsCost;
     } else if (type === "3星") {
-      pairs = combination(unit, 3);
+      triplets = combination(unit, 3);
       total = Math.ceil(price * pairs * quantity);
       tripletsCost = Math.ceil(62.8 * pairs * quantity);
       cost = tripletsCost;
     } else if (type === "4星") {
-      pairs = combination(unit, 4);
+      quads = combination(unit, 4);
       total = Math.ceil(price * pairs * quantity);
       quadsCost = 51 * pairs * quantity;
       cost = quadsCost;

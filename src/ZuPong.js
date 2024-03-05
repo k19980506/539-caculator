@@ -205,103 +205,122 @@ function Zupong() {
         </Button>
       </div>
       <div className="section">
-        <span>第一柱：</span>
-        <Select
-          className="select"
-          value={pillar1}
-          onChange={(e) => setPillar1(e.target.value)}
-        >
-          {Array.from({ length: 10 }, (_, i) => i).map((value) => (
-            <MenuItem key={value} value={value}>
-              {value}
-            </MenuItem>
-          ))}
-        </Select>
+        <div>
+          <span>第一柱：</span>
+          <Select
+            className="select"
+            value={pillar1}
+            style={{ "text-align": "center" }}
+            onChange={(e) => setPillar1(e.target.value)}
+          >
+            {Array.from({ length: 10 }, (_, i) => i).map((value) => (
+              <MenuItem key={value} value={value}>
+                {value}
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
+        <div>
+          <span>第二柱：</span>
+          <Select
+            className="select"
+            value={pillar2}
+            onChange={(e) => setPillar2(e.target.value)}
+            style={{ "text-align": "center" }}
+          >
+            {Array.from({ length: 10 }, (_, i) => i).map((value) => (
+              <MenuItem key={value} value={value}>
+                {value}
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
+        <div>
+          <span>第三柱：</span>
+          <Select
+            className="select"
+            value={pillar3}
+            style={{ "text-align": "center" }}
+            onChange={(e) => setPillar3(e.target.value)}
+          >
+            {Array.from({ length: 10 }, (_, i) => i).map((value) => (
+              <MenuItem key={value} value={value}>
+                {value}
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
 
-        <span>第二柱：</span>
-        <Select
-          className="select"
-          value={pillar2}
-          onChange={(e) => setPillar2(e.target.value)}
-        >
-          {Array.from({ length: 10 }, (_, i) => i).map((value) => (
-            <MenuItem key={value} value={value}>
-              {value}
-            </MenuItem>
-          ))}
-        </Select>
+        <div>
+          <span>第四柱：</span>
+          <Select
+            className="select"
+            value={pillar4}
+            style={{ "text-align": "center" }}
+            onChange={(e) => setPillar4(e.target.value)}
+          >
+            {Array.from({ length: 10 }, (_, i) => i).map((value) => (
+              <MenuItem key={value} value={value}>
+                {value}
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
 
-        <span>第三柱：</span>
-        <Select
-          className="select"
-          value={pillar3}
-          onChange={(e) => setPillar3(e.target.value)}
-        >
-          {Array.from({ length: 10 }, (_, i) => i).map((value) => (
-            <MenuItem key={value} value={value}>
-              {value}
-            </MenuItem>
-          ))}
-        </Select>
+        <div>
+          <span>第五柱：</span>
+          <Select
+            className="select"
+            style={{ "text-align": "center" }}
+            value={pillar5}
+            onChange={(e) => setPillar5(e.target.value)}
+          >
+            {Array.from({ length: 10 }, (_, i) => i).map((value) => (
+              <MenuItem key={value} value={value}>
+                {value}
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
 
-        <span>第四柱：</span>
-        <Select
-          className="select"
-          value={pillar4}
-          onChange={(e) => setPillar4(e.target.value)}
-        >
-          {Array.from({ length: 10 }, (_, i) => i).map((value) => (
-            <MenuItem key={value} value={value}>
-              {value}
-            </MenuItem>
-          ))}
-        </Select>
+        <div>
+          <span>第六柱：</span>
+          <Select
+            className="select"
+            style={{ "text-align": "center" }}
+            value={pillar6}
+            onChange={(e) => setPillar6(e.target.value)}
+          >
+            {Array.from({ length: 10 }, (_, i) => i).map((value) => (
+              <MenuItem key={value} value={value}>
+                {value}
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
 
-        <span>第五柱：</span>
-        <Select
-          className="select"
-          value={pillar5}
-          onChange={(e) => setPillar5(e.target.value)}
-        >
-          {Array.from({ length: 10 }, (_, i) => i).map((value) => (
-            <MenuItem key={value} value={value}>
-              {value}
-            </MenuItem>
-          ))}
-        </Select>
-
-        <span>第六柱：</span>
-        <Select
-          className="select"
-          value={pillar6}
-          onChange={(e) => setPillar6(e.target.value)}
-        >
-          {Array.from({ length: 10 }, (_, i) => i).map((value) => (
-            <MenuItem key={value} value={value}>
-              {value}
-            </MenuItem>
-          ))}
-        </Select>
-
-        <span>第七柱：</span>
-        <Select
-          className="select"
-          value={pillar7}
-          onChange={(e) => setPillar7(e.target.value)}
-        >
-          {Array.from({ length: 10 }, (_, i) => i).map((value) => (
-            <MenuItem key={value} value={value}>
-              {value}
-            </MenuItem>
-          ))}
-        </Select>
+        <div>
+          <span>第七柱：</span>
+          <Select
+            className="select"
+            style={{ "text-align": "center" }}
+            value={pillar7}
+            onChange={(e) => setPillar7(e.target.value)}
+          >
+            {Array.from({ length: 10 }, (_, i) => i).map((value) => (
+              <MenuItem key={value} value={value}>
+                {value}
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
       </div>
 
       <table>
         <thead>
           <tr>
             <th>種類</th>
-            <th>碰數</th>
+            <th>倍數</th>
             <th>動作</th>
           </tr>
         </thead>
@@ -420,7 +439,7 @@ function Zupong() {
       <div>
         {items.map((item, index) => (
           <div key={index}>
-            <p>{`${item.type} - 碰數：${item.quantity}`}</p>
+            <p>{`${item.type} - 倍數：${item.quantity}`}</p>
             <button onClick={() => removeItem(index)}>刪除</button>
           </div>
         ))}

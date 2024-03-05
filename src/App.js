@@ -4,7 +4,7 @@ import LianPong from "./LianPong";
 import ZuPong from "./ZuPong";
 
 function App() {
-  const [mode, setMode] = useState("zupong");
+  const [mode, setMode] = useState("lianpong");
 
   const toggleMode = () => {
     setMode(mode === "lianpong" ? "zupong" : "lianpong");

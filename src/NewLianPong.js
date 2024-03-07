@@ -131,8 +131,6 @@ const NewLianPong = forwardRef(({ f, price, totalItems }, ref) => {
     }
   }
 
-  console.log(quickNumbersState);
-
   const quickItems = [
     {
       key: "1",

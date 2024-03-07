@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import { Tabs } from "antd";
 import NewLianPong from "./NewLianPong";
+import Car from "./Car";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -27,7 +28,9 @@ function App() {
     {
       key: "2",
       label: "全車",
-      children: "Content of Tab Pane 2",
+      children: (
+        <Car price={price} totalItems={items} f={setItems} ref={childRef} />
+      ),
     },
     {
       key: "3",
@@ -106,30 +109,43 @@ function App() {
               <div className="detail-client">
                 <span>{`客本：${totalClientCost}`}</span>
                 <div className="detail">
-                  {items.map((item) => (
-                    <div>
-                      <span style={{ color: "red", fontWeight: "bold" }}>
-                        {`${item.numbers.join(",")} ... ${item.type} x ${
-                          item.quantity
-                        }`}
-                        <br />
-                      </span>
-                      <span>
-                        {item.pairs === 0 ? null : `兩星：${item.pairs}碰 `}
-                        {item.triplets === 0
-                          ? null
-                          : `三星：${item.triplets}碰 `}
-                        {item.quads === 0 ? null : `四星：${item.quads}碰`}
-                        <br />
-                      </span>
-                      <span>
-                        {`${item.clientCost} * ${
-                          item.pairs + item.triplets + item.quads
-                        } * ${item.quantity} = ${item.total}`}
-                        <br />
-                      </span>
-                    </div>
-                  ))}
+                  {items.map((item) =>
+                    item.type === "車" ? (
+                      <div>
+                        <span style={{ color: "red", fontWeight: "bold" }}>
+                          {`${item.numbers.join(",")}...各${item.quantity}車`}
+                          <br />
+                        </span>
+                        <span>
+                          {`${price} * 38 * ${item.quantity} * ${item.unit} = ${item.total}`}
+                          <br />
+                        </span>
+                      </div>
+                    ) : (
+                      <div>
+                        <span style={{ color: "red", fontWeight: "bold" }}>
+                          {`${item.numbers.join(",")} ... ${item.type} x ${
+                            item.quantity
+                          }`}
+                          <br />
+                        </span>
+                        <span>
+                          {item.pairs === 0 ? null : `兩星：${item.pairs}碰 `}
+                          {item.triplets === 0
+                            ? null
+                            : `三星：${item.triplets}碰 `}
+                          {item.quads === 0 ? null : `四星：${item.quads}碰`}
+                          <br />
+                        </span>
+                        <span>
+                          {`${item.clientCost} * ${
+                            item.pairs + item.triplets + item.quads
+                          } * ${item.quantity} = ${item.total}`}
+                          <br />
+                        </span>
+                      </div>
+                    )
+                  )}
                   總共
                   {items.length === 0 ? null : items.length === 1 ? (
                     <span
@@ -145,57 +161,70 @@ function App() {
               <div className="detail-cost">
                 <span>{`成本：${totalCost}`}</span>
                 <div className="detail">
-                  {items.map((item) => (
-                    <div>
-                      <span style={{ color: "red", fontWeight: "bold" }}>
-                        {`${item.numbers.join(",")} ... ${item.type} x ${
-                          item.quantity
-                        }`}
-                        <br />
-                      </span>
-                      <span>
-                        {item.pairs === 0 ? null : `兩星：${item.pairs}碰 `}
-                        {item.triplets === 0
-                          ? null
-                          : `三星：${item.triplets}碰 `}
-                        {item.quads === 0 ? null : `四星：${item.quads}碰`}
-                        <br />
-                      </span>
-                      {item.pairs === 0 ? null : (
-                        <span>
-                          {`71.55 * ${item.pairs} * ${item.quantity} = ${item.pairsCost}`}
+                  {items.map((item) =>
+                    item.type === "車" ? (
+                      <div>
+                        <span style={{ color: "red", fontWeight: "bold" }}>
+                          {`${item.numbers.join(",")}...各${item.quantity}車`}
                           <br />
                         </span>
-                      )}
-                      {item.triplets === 0 ? null : (
                         <span>
-                          {`62.8 * ${item.triplets} * ${item.quantity} = ${item.tripletsCost}`}
+                          {`2719 * ${item.quantity} * ${item.unit}  = ${item.cost}`}
                           <br />
                         </span>
-                      )}
-                      {item.quads === 0 ? null : (
-                        <span>
-                          {`51 * ${item.quads} * ${item.quantity} = ${item.quadsCost}`}
+                      </div>
+                    ) : (
+                      <div>
+                        <span style={{ color: "red", fontWeight: "bold" }}>
+                          {`${item.numbers.join(",")} ... ${item.type} x ${
+                            item.quantity
+                          }`}
                           <br />
                         </span>
-                      )}
-                      <span>
-                        {[
-                          item.pairsCost,
-                          item.tripletsCost,
-                          item.quadsCost,
-                        ].filter((cost) => cost !== 0).length > 1
-                          ? `${[
-                              item.pairsCost,
-                              item.tripletsCost,
-                              item.quadsCost,
-                            ]
-                              .filter((cost) => cost !== 0)
-                              .join("+")}=${item.cost}`
-                          : null}
-                      </span>
-                    </div>
-                  ))}
+                        <span>
+                          {item.pairs === 0 ? null : `兩星：${item.pairs}碰 `}
+                          {item.triplets === 0
+                            ? null
+                            : `三星：${item.triplets}碰 `}
+                          {item.quads === 0 ? null : `四星：${item.quads}碰`}
+                          <br />
+                        </span>
+                        {item.pairs === 0 ? null : (
+                          <span>
+                            {`71.55 * ${item.pairs} * ${item.quantity} = ${item.pairsCost}`}
+                            <br />
+                          </span>
+                        )}
+                        {item.triplets === 0 ? null : (
+                          <span>
+                            {`62.8 * ${item.triplets} * ${item.quantity} = ${item.tripletsCost}`}
+                            <br />
+                          </span>
+                        )}
+                        {item.quads === 0 ? null : (
+                          <span>
+                            {`51 * ${item.quads} * ${item.quantity} = ${item.quadsCost}`}
+                            <br />
+                          </span>
+                        )}
+                        <span>
+                          {[
+                            item.pairsCost,
+                            item.tripletsCost,
+                            item.quadsCost,
+                          ].filter((cost) => cost !== 0).length > 1
+                            ? `${[
+                                item.pairsCost,
+                                item.tripletsCost,
+                                item.quadsCost,
+                              ]
+                                .filter((cost) => cost !== 0)
+                                .join("+")}=${item.cost}`
+                            : null}
+                        </span>
+                      </div>
+                    )
+                  )}
                   總共
                   {items.length === 0 ? null : items.length === 1 ? (
                     <span

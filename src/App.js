@@ -123,7 +123,7 @@ function App() {
                         <br />
                       </span>
                       <span>
-                        {`${price} * ${
+                        {`${item.clientCost} * ${
                           item.pairs + item.triplets + item.quads
                         } * ${item.quantity} = ${item.total}`}
                         <br />

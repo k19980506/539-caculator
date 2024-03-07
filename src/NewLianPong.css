@@ -1,0 +1,57 @@
+.sub_container {
+  display: flex;
+}
+
+.sub_container > div {
+  flex: 1;
+  padding: 10px;
+}
+
+.sub_container > div > div {
+  flex: 1;
+}
+
+div {
+  padding: 2px;
+}
+
+.numbers {
+  background-color: darkgrey;
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  border-radius: 10px;
+}
+
+.number {
+  width: 30px;
+  height: 30px;
+  border: 1px solid chartreuse;
+  color: chartreuse;
+  border-radius: 30px; /* 高度 */
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.selectedNumbers {
+  background-color: darkgrey;
+  border-radius: 10px;
+  font-size: large;
+  min-height: 100px;
+}
+
+th > button {
+  background-color: red;
+}
+
+th > button:disabled {
+  background-color: black;
+}
+
+table {
+  margin: auto;
+  padding: 10px;
+}

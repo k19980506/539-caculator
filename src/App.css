@@ -1,7 +1,7 @@
 button {
   margin-top: 5px;
   cursor: pointer;
-  background-color: red;
+  background-color: aliceblue;
 }
 
 button:hover {
@@ -15,7 +15,7 @@ button:hover {
 }
 
 .headerBar {
-  background-color: aqua;
+  background-color: darkgray;
   padding: 5px;
 }
 
@@ -32,7 +32,7 @@ button:hover {
   display: flex;
 }
 .item > button {
-  background-color: red;
+  background-color: aliceblue;
 }
 
 .totals-container {
@@ -47,10 +47,10 @@ button:hover {
 
 .detail-cost {
   flex: 1;
-  background-color: turquoise;
+  background-color: darkgray;
   min-height: 200px;
 }
 
 .reset {
-  background-color: red;
+  background-color: aliceblue;
 }

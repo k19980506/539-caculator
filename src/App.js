@@ -3,6 +3,7 @@ import "./App.css";
 import { Tabs } from "antd";
 import NewLianPong from "./NewLianPong";
 import Car from "./Car";
+import NewZuPong from "./NewZuPong";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -34,8 +35,15 @@ function App() {
     },
     {
       key: "3",
-      label: "柱碰快速",
-      children: "Content of Tab Pane 3",
+      label: "立柱快速",
+      children: (
+        <NewZuPong
+          price={price}
+          totalItems={items}
+          f={setItems}
+          ref={childRef}
+        />
+      ),
     },
   ];
 
@@ -97,9 +105,35 @@ function App() {
           <div>
             {items.map((item, index) => (
               <div className="item" key={index}>
-                <p>{`${item.numbers.join(",")} ... ${item.type} x ${
-                  item.quantity
-                }`}</p>
+                {item.type === "車" ? (
+                  <div style={{ flex: "auto" }}>
+                    <p style={{ color: "red", fontWeight: "bold" }}>{`全車`}</p>
+                    <p>{`${item.numbers.join(",")}...各${item.quantity}車`}</p>
+                  </div>
+                ) : item.subtype === "lianpong" ? (
+                  <div style={{ flex: "auto" }}>
+                    <p
+                      style={{ color: "red", fontWeight: "bold" }}
+                    >{`連碰快速-${item.type}星`}</p>
+                    <p>{`${item.numbers.join(",")} ... ${item.type} x ${
+                      item.quantity
+                    }`}</p>
+                  </div>
+                ) : (
+                  <div style={{ flex: "auto" }}>
+                    <p
+                      style={{ color: "red", fontWeight: "bold" }}
+                    >{`立柱快速-${item.type}星`}</p>
+                    {item.numbers
+                      .filter((numbers) => numbers.length !== 0)
+                      .map((numbers, index) => (
+                        <span>
+                          第{index}柱: {numbers.join(",")} <br />
+                        </span>
+                      ))}
+                    <p>{`${item.type} x ${item.quantity}`}</p>
+                  </div>
+                )}
                 <button onClick={() => removeItem(index)}>刪除</button>
               </div>
             ))}
@@ -124,9 +158,16 @@ function App() {
                     ) : (
                       <div>
                         <span style={{ color: "red", fontWeight: "bold" }}>
-                          {`${item.numbers.join(",")} ... ${item.type} x ${
-                            item.quantity
-                          }`}
+                          {item.subtype === "lianpong"
+                            ? `${item.numbers.join(",")} ... ${item.type} x ${
+                                item.quantity
+                              }`
+                            : `${item.numbers
+                                .filter((numbers) => numbers.length !== 0)
+                                .map((numbers) => numbers.length)
+                                .join("顆x")}顆...${item.type}*${
+                                item.quantity
+                              }`}
                           <br />
                         </span>
                         <span>
@@ -176,9 +217,16 @@ function App() {
                     ) : (
                       <div>
                         <span style={{ color: "red", fontWeight: "bold" }}>
-                          {`${item.numbers.join(",")} ... ${item.type} x ${
-                            item.quantity
-                          }`}
+                          {item.subtype === "lianpong"
+                            ? `${item.numbers.join(",")} ... ${item.type} x ${
+                                item.quantity
+                              }`
+                            : `${item.numbers
+                                .filter((numbers) => numbers.length !== 0)
+                                .map((numbers) => numbers.length)
+                                .join("顆x")}顆...${item.type}*${
+                                item.quantity
+                              }`}
                           <br />
                         </span>
                         <span>

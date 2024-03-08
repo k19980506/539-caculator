@@ -121,8 +121,6 @@ function Zupong() {
     ].filter((e) => e !== 0);
 
     if (type === "2") {
-      console.log(pillars);
-      console.log(pairs);
       pairs = calculateTwoStarCombinations(pillars);
       total = Math.ceil(price * pairs * quantity);
       pairsCost = Math.ceil(71.55 * pairs * quantity);

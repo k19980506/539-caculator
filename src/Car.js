@@ -75,8 +75,8 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
               className="number"
               style={
                 quickNumbersState[value]
-                  ? { color: "blue", backgroundColor: "cornsilk" }
-                  : { color: "cornsilk", backgroundColor: "blue" }
+                  ? { color: "white", backgroundColor: "black" }
+                  : { color: "black", backgroundColor: "white" }
               }
               onClick={() => selectQuickNumbers(value)}
             >
@@ -124,8 +124,8 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
             className="number"
             style={
               numbers.includes(value)
-                ? { color: "black", backgroundColor: "chartreuse" }
-                : { color: "chartreuse", backgroundColor: "black" }
+                ? { color: "white", backgroundColor: "black" }
+                : { color: "black", backgroundColor: "white" }
             }
             onClick={() => selectNumbers(value)}
           >

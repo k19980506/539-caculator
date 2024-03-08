@@ -16,6 +16,7 @@ div {
 }
 
 .numbers {
+  height: 100%;
   background-color: darkgrey;
   display: grid;
   grid-template-columns: repeat(10, minmax(0, 1fr));
@@ -25,9 +26,9 @@ div {
 .number {
   width: 30px;
   height: 30px;
-  border: 1px solid white;
-  color: white;
-  border-radius: 30px; /* 高度 */
+  border: 1px solid black;
+  color: black;
+  border-radius: 30px;
 }
 
 .result {
@@ -40,7 +41,11 @@ div {
   background-color: darkgrey;
   border-radius: 10px;
   font-size: large;
-  min-height: 100px;
+  max-height: 150px;
+  height: 80%;
+  flex-direction: column;
+  display: flex;
+  overflow: auto;
 }
 
 th > button {
@@ -54,4 +59,10 @@ th > button:disabled {
 table {
   margin: auto;
   padding: 10px;
+}
+
+.section {
+  display: flex;
+  flex-direction: row;
+  min-height: 200px;
 }

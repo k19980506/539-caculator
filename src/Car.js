@@ -140,12 +140,15 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
               items: quickItems,
             }}
           >
-            <a onClick={(e) => e.preventDefault()} style={{ float: "right" }}>
+            <button
+              onClick={(e) => e.preventDefault()}
+              style={{ float: "right" }}
+            >
               <Space onClick={(e) => e.preventDefault()}>
                 快速選擇
                 <DownOutlined />
               </Space>
-            </a>
+            </button>
           </Dropdown>
         </div>
 

@@ -18,6 +18,30 @@ with open("539_data.csv", "r") as file:
 number_counts = defaultdict(int)
 print(f"總共 {len(lottery_data)} 期")
 
+continuous_count = 0
+continuous_numbers_count = 0
+previous_numbers = set()
+
+# 遍歷所有開獎結果，計算每一天與前一天開出任一相同號碼的天數，以及連續開出的號碼數量
+for i in range(1, len(lottery_data)):
+    _, current_numbers = lottery_data[i]
+    _, previous_numbers = lottery_data[i - 1]
+
+    # 檢查是否有相同號碼
+    if any(number in previous_numbers for number in current_numbers):
+        continuous_count += 1
+
+    for number in previous_numbers:
+        if number in current_numbers:
+            continuous_numbers_count += 1
+
+    # 更新前一天的號碼集合
+    previous_numbers = set(current_numbers)
+
+print(f"與前一天開出任一相同號碼的天數：{continuous_count}")
+print(f"總共有 {continuous_numbers_count} 個號碼被連續開出")
+
+
 # 遍歷所有開獎結果，計算每個號碼的出現次數
 for _, numbers in lottery_data:
     for number in numbers:

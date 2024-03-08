@@ -120,24 +120,22 @@ function Zupong() {
       pillar7,
     ].filter((e) => e !== 0);
 
-    if (type === "2星") {
-      console.log(pillars);
-      console.log(pairs);
+    if (type === "2") {
       pairs = calculateTwoStarCombinations(pillars);
       total = Math.ceil(price * pairs * quantity);
       pairsCost = Math.ceil(71.55 * pairs * quantity);
       cost = pairsCost;
-    } else if (type === "3星") {
+    } else if (type === "3") {
       triplets = calculateThreeStarCombinations(pillars);
       total = Math.ceil(price * triplets * quantity);
       tripletsCost = Math.ceil(62.8 * triplets * quantity);
       cost = tripletsCost;
-    } else if (type === "4星") {
+    } else if (type === "4") {
       quads = calculateFourStarCombinations(pillars);
       total = Math.ceil(price * quads * quantity);
       quadsCost = Math.ceil(51 * quads * quantity);
       cost = quadsCost;
-    } else if (type === "23星") {
+    } else if (type === "23") {
       pairs = calculateTwoStarCombinations(pillars);
       triplets = calculateThreeStarCombinations(pillars);
       total =
@@ -146,7 +144,7 @@ function Zupong() {
       pairsCost = Math.ceil(71.55 * pairs * quantity);
       tripletsCost = Math.ceil(62.8 * triplets * quantity);
       cost = pairsCost + tripletsCost;
-    } else if (type === "234星") {
+    } else if (type === "234") {
       pairs = calculateTwoStarCombinations(pillars);
       triplets = calculateThreeStarCombinations(pillars);
       quads = calculateFourStarCombinations(pillars);
@@ -181,6 +179,7 @@ function Zupong() {
       pairsCost,
       tripletsCost,
       quadsCost,
+      pillars,
     };
     setItems([...items, newItem]);
   };
@@ -198,6 +197,7 @@ function Zupong() {
           className="input"
           type="number"
           value={price}
+          style={{ "text-align": "center" }}
           onChange={(e) => setPrice(e.target.value)}
         />
         <Button variant="contained" onClick={handleClear}>
@@ -336,7 +336,7 @@ function Zupong() {
               />
             </th>
             <th>
-              <button onClick={() => addItem("2星", twoStarQuantity)}>
+              <button onClick={() => addItem("2", twoStarQuantity)}>
                 新增
               </button>
             </th>
@@ -354,7 +354,7 @@ function Zupong() {
               />
             </th>
             <th>
-              <button onClick={() => addItem("3星", threeStarQuantity)}>
+              <button onClick={() => addItem("3", threeStarQuantity)}>
                 新增
               </button>
             </th>
@@ -372,7 +372,7 @@ function Zupong() {
               />
             </th>
             <th>
-              <button onClick={() => addItem("4星", fourStarQuantity)}>
+              <button onClick={() => addItem("4", fourStarQuantity)}>
                 新增
               </button>
             </th>
@@ -390,7 +390,7 @@ function Zupong() {
               />
             </th>
             <th>
-              <button onClick={() => addItem("23星", twoThreeStarQuantity)}>
+              <button onClick={() => addItem("23", twoThreeStarQuantity)}>
                 新增
               </button>
             </th>
@@ -408,9 +408,7 @@ function Zupong() {
               />
             </th>
             <th>
-              <button
-                onClick={() => addItem("234星", twoThreeFourStarQuantity)}
-              >
+              <button onClick={() => addItem("234", twoThreeFourStarQuantity)}>
                 新增
               </button>
             </th>
@@ -428,7 +426,7 @@ function Zupong() {
               />
             </th>
             <th>
-              <button onClick={() => addItem("34星", threeFourStarQuantity)}>
+              <button onClick={() => addItem("34", threeFourStarQuantity)}>
                 新增
               </button>
             </th>
@@ -439,7 +437,9 @@ function Zupong() {
       <div>
         {items.map((item, index) => (
           <div key={index}>
-            <p>{`${item.type} - 倍數：${item.quantity}`}</p>
+            <p>{`${item.pillars.join("顆x")}顆...${item.type}*${
+              item.quantity
+            }`}</p>
             <button onClick={() => removeItem(index)}>刪除</button>
           </div>
         ))}
@@ -451,6 +451,9 @@ function Zupong() {
           <div className="detail">
             {items.map((item) => (
               <React.Fragment>
+                <span>
+                  {item.pillars.join("顆x")}顆...{item.type}*{item.quantity}
+                </span>
                 <span>
                   {item.pairs === 0 ? null : `兩星：${item.pairs}碰 `}
                   {item.triplets === 0 ? null : `三星：${item.triplets}碰 `}
@@ -475,6 +478,9 @@ function Zupong() {
           <div className="detail">
             {items.map((item) => (
               <React.Fragment>
+                <span>
+                  {item.pillars.join("顆x")}顆...{item.type}*{item.quantity}{" "}
+                </span>
                 <span>
                   {item.pairs === 0 ? null : `兩星：${item.pairs}碰 `}
                   {item.triplets === 0 ? null : `三星：${item.triplets}碰 `}

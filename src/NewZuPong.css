@@ -1,0 +1,68 @@
+.sub_container {
+  display: flex;
+}
+
+.sub_container > div {
+  flex: 1;
+  padding: 10px;
+}
+
+.sub_container > div > div {
+  flex: 1;
+}
+
+div {
+  padding: 2px;
+}
+
+.numbers {
+  height: 100%;
+  background-color: darkgrey;
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  border-radius: 10px;
+}
+
+.number {
+  width: 30px;
+  height: 30px;
+  border: 1px solid black;
+  color: black;
+  border-radius: 30px;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.selectedNumbers {
+  background-color: darkgrey;
+  border-radius: 10px;
+  font-size: large;
+  max-height: 150px;
+  height: 80%;
+  flex-direction: column;
+  display: flex;
+  overflow: auto;
+}
+
+th > button {
+  background-color: aliceblue;
+}
+
+th > button:disabled {
+  background-color: black;
+}
+
+table {
+  margin: auto;
+  padding: 10px;
+}
+
+.section {
+  display: flex;
+  flex-direction: row;
+  min-height: 200px;
+}

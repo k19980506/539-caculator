@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./LianPong.css";
 
 function factorial(n) {
@@ -13,7 +13,7 @@ function combination(n, m) {
   return factorial(n) / (factorial(m) * factorial(n - m));
 }
 
-function LianPong() {
+function LianPong({ price, items, setItems }) {
   const [carUnit, setCarUnit] = useState(1);
   const [carQuantity, setCarQuantity] = useState(1);
   const [twoStarUnit, setTwoStarUnit] = useState(2);
@@ -26,24 +26,6 @@ function LianPong() {
   const [twoThreeStarQuantity, setTwoThreeStarQuantity] = useState(1);
   const [twoThreeFourStarUnit, setTwoThreeFourStarUnit] = useState(4);
   const [twoThreeFourStarQuantity, setTwoThreeFourStarQuantity] = useState(1);
-
-  const [items, setItems] = useState([]);
-  const [totalClientCost, setTotalClientCost] = useState(0);
-  const [totalCost, setTotalCost] = useState(0);
-  const [price, setPrice] = useState(77);
-
-  useEffect(() => {
-    let clientTotal = 0;
-    let costTotal = 0;
-
-    items.forEach((item) => {
-      clientTotal += item.total;
-      costTotal += item.cost;
-    });
-
-    setTotalClientCost(clientTotal);
-    setTotalCost(costTotal);
-  }, [items]);
 
   const addItem = (type, unit, quantity) => {
     let total = 0;
@@ -58,7 +40,7 @@ function LianPong() {
     if (type === "2星") {
       pairs = combination(unit, 2);
       total = Math.ceil(price * pairs * quantity);
-      pairsCost = Math.ceil(71.55 * pairs * quantity);
+      pairsCost = Math.ceil(71.7 * pairs * quantity);
       cost = pairsCost;
     } else if (type === "3星") {
       triplets = combination(unit, 3);
@@ -76,7 +58,7 @@ function LianPong() {
       total =
         Math.ceil(price * pairs * quantity) +
         Math.ceil(price * triplets * quantity);
-      pairsCost = Math.ceil(71.55 * pairs * quantity);
+      pairsCost = Math.ceil(71.7 * pairs * quantity);
       tripletsCost = Math.ceil(62.8 * triplets * quantity);
       cost = pairsCost + tripletsCost;
     } else if (type === "234星") {
@@ -87,17 +69,18 @@ function LianPong() {
         Math.ceil(price * pairs * quantity) +
         Math.ceil(price * triplets * quantity) +
         Math.ceil(price * quads * quantity);
-      pairsCost = Math.ceil(71.55 * pairs * quantity);
+      pairsCost = Math.ceil(71.7 * pairs * quantity);
       tripletsCost = Math.ceil(62.8 * triplets * quantity);
       quadsCost = Math.ceil(51 * quads * quantity);
       cost = pairsCost + tripletsCost + quadsCost;
     } else {
       total = Math.ceil(price * 38 * unit * quantity);
-      cost = Math.ceil(2719 * unit * quantity);
+      cost = Math.ceil(2725 * unit * quantity);
     }
 
     const newItem = {
       type,
+      subtype: "lianpong",
       unit,
       clientCost: price,
       cost,
@@ -113,41 +96,8 @@ function LianPong() {
     setItems([...items, newItem]);
   };
 
-  const removeItem = (index) => {
-    const newItems = [...items];
-    newItems.splice(index, 1);
-    setItems(newItems);
-  };
-
-  const resetItem = () => {
-    setItems([]);
-  };
-
-  const updatePrice = (newPrice) => {
-    setPrice(newPrice);
-  };
-
-  let customTotalList =
-    items.length > 0 ? items.map((item) => item.total).join("+") : "0";
-  let costTotalList =
-    items.length > 0 ? items.map((item) => item.cost).join("+") : "0";
-
   return (
     <div className="LianPong">
-      <div className="option">
-        <div>
-          客本：
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => updatePrice(e.target.value)}
-            placeholder="修改全部客本"
-          />
-          <button className="reset" onClick={() => resetItem()}>
-            清除
-          </button>
-        </div>
-      </div>
       <table>
         <thead>
           <tr>
@@ -335,94 +285,6 @@ function LianPong() {
           </tr>
         </tbody>
       </table>
-
-      <div>
-        {items.map((item, index) => (
-          <div key={index}>
-            <p>{`${item.type} - 球數：${item.unit}，支數：${item.quantity}`}</p>
-            <button onClick={() => removeItem(index)}>刪除</button>
-          </div>
-        ))}
-      </div>
-
-      <div className="totals-container">
-        <div className="detail">
-          <span>{`客本：${totalClientCost}`}</span>
-          <div className="detail">
-            {items.map((item) =>
-              item.type === "車" ? (
-                <span>{`${price} * 38 * ${item.unit} * ${item.quantity} = ${item.total}`}</span>
-              ) : (
-                <React.Fragment>
-                  <span>{`${item.unit} * ${item.type} * ${item.quantity}`}</span>
-                  <span>
-                    {item.pairs === 0 ? null : `兩星：${item.pairs}碰 `}
-                    {item.triplets === 0 ? null : `三星：${item.triplets}碰 `}
-                    {item.quads === 0 ? null : `四星：${item.quads}碰`}
-                  </span>
-                  <span>
-                    {`${price} * ${item.pairs + item.triplets + item.quads} * ${
-                      item.quantity
-                    } = ${item.total}`}
-                  </span>
-                </React.Fragment>
-              )
-            )}
-            {items.length === 0 ? null : items.length === 1 ? (
-              <span>{`${totalClientCost}`}</span>
-            ) : (
-              <span>{`${customTotalList}=${totalClientCost}`}</span>
-            )}
-          </div>
-        </div>
-        <div className="detail">
-          <p>{`成本：${totalCost}`}</p>
-          <div className="detail">
-            {items.map((item) =>
-              item.type === "車" ? (
-                <span>{`2719 * ${item.unit} * ${item.quantity} = ${item.cost}`}</span>
-              ) : (
-                <React.Fragment>
-                  <span>{`${item.unit} * ${item.type} * ${item.quantity}`}</span>
-                  <span>
-                    {item.pairs === 0 ? null : `兩星：${item.pairs}碰 `}
-                    {item.triplets === 0 ? null : `三星：${item.triplets}碰 `}
-                    {item.quads === 0 ? null : `四星：${item.quads}碰`}
-                  </span>
-                  {item.pairs === 0 ? null : (
-                    <span>{`71.55 * ${item.pairs} * ${item.quantity} = ${item.pairsCost}`}</span>
-                  )}
-                  {item.triplets === 0 ? null : (
-                    <span>{`62.8 * ${item.triplets} * ${item.quantity} = ${item.tripletsCost}`}</span>
-                  )}
-                  {item.quads === 0 ? null : (
-                    <span>{`51 * ${item.quads} * ${item.quantity} = ${item.quadsCost}`}</span>
-                  )}
-                  <span>
-                    {[item.pairsCost, item.tripletsCost, item.quadsCost].filter(
-                      (cost) => cost !== 0
-                    ).length > 1
-                      ? `${[item.pairsCost, item.tripletsCost, item.quadsCost]
-                          .filter((cost) => cost !== 0)
-                          .join("+")}=${item.cost}`
-                      : null}
-                  </span>
-                </React.Fragment>
-              )
-            )}
-            {items.length === 0 ? null : items.length === 1 ? (
-              <span>{`${totalCost}`}</span>
-            ) : (
-              <span>{`${costTotalList}=${totalCost}`}</span>
-            )}
-          </div>
-        </div>
-      </div>
-      {totalCost === 0
-        ? null
-        : `溢收：${totalClientCost} - ${totalCost} = ${
-            totalClientCost - totalCost
-          }`}
     </div>
   );
 }

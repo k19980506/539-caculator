@@ -88,9 +88,9 @@ function LianPong({ price, items, setItems }) {
       if (price > 78) {
         total = 3000;
       } else {
-        total = Math.ceil(price * 38 * unit * quantity);
+        total = Math.ceil(Math.ceil(price * 38 * unit) * quantity);
       }
-      cost = Math.ceil(2725 * unit * quantity);
+      cost = Math.ceil(Math.ceil(2725 * unit) * quantity);
     }
 
     const newItem = {

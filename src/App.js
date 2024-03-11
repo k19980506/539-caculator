@@ -99,7 +99,7 @@ function App() {
             <div className="detail">
               {items.map((item) =>
                 item.type === "車" ? (
-                  <span>{`${price} * 38 * ${item.unit} * ${item.quantity} = ${item.total}`}</span>
+                  <span>{`${item.clientCost} * 38 * ${item.unit} * ${item.quantity} = ${item.total}`}</span>
                 ) : (
                   <React.Fragment>
                     <span>
@@ -113,7 +113,7 @@ function App() {
                       {item.quads === 0 ? null : `四星：${item.quads}碰`}
                     </span>
                     <span>
-                      {`${price} * ${
+                      {`${item.clientCost} * ${
                         item.pairs + item.triplets + item.quads
                       } * ${item.quantity} = ${item.total}`}
                     </span>

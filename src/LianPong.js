@@ -26,6 +26,8 @@ function LianPong({ price, items, setItems }) {
   const [twoThreeStarQuantity, setTwoThreeStarQuantity] = useState(1);
   const [twoThreeFourStarUnit, setTwoThreeFourStarUnit] = useState(4);
   const [twoThreeFourStarQuantity, setTwoThreeFourStarQuantity] = useState(1);
+  const [threeFourStarUnit, setThreeFourStarUnit] = useState(4);
+  const [threeFourStarQuantity, setThreeFourStarQuantity] = useState(1);
 
   const addItem = (type, unit, quantity) => {
     let total = 0;
@@ -73,8 +75,21 @@ function LianPong({ price, items, setItems }) {
       tripletsCost = Math.ceil(62.8 * triplets * quantity);
       quadsCost = Math.ceil(51 * quads * quantity);
       cost = pairsCost + tripletsCost + quadsCost;
+    } else if (type === "34星") {
+      triplets = combination(unit, 3);
+      quads = combination(unit, 4);
+      total =
+        Math.ceil(price * triplets * quantity) +
+        Math.ceil(price * quads * quantity);
+      tripletsCost = Math.ceil(62.8 * triplets * quantity);
+      quadsCost = Math.ceil(51 * quads * quantity);
+      cost = tripletsCost + quadsCost;
     } else {
-      total = Math.ceil(price * 38 * unit * quantity);
+      if (price > 78) {
+        total = 3000;
+      } else {
+        total = Math.ceil(price * 38 * unit * quantity);
+      }
       cost = Math.ceil(2725 * unit * quantity);
     }
 
@@ -277,6 +292,38 @@ function LianPong({ price, items, setItems }) {
                     twoThreeFourStarUnit,
                     twoThreeFourStarQuantity
                   )
+                }
+              >
+                新增
+              </button>
+            </th>
+          </tr>
+          <tr>
+            <th>34星</th>
+            <th>
+              <input
+                type="number"
+                value={threeFourStarUnit}
+                onChange={(e) =>
+                  setThreeFourStarUnit(parseFloat(e.target.value))
+                }
+                step="1"
+              />
+            </th>
+            <th>
+              <input
+                type="number"
+                value={threeFourStarQuantity}
+                onChange={(e) =>
+                  setThreeFourStarQuantity(parseFloat(e.target.value))
+                }
+                step="1"
+              />
+            </th>
+            <th>
+              <button
+                onClick={() =>
+                  addItem("234星", threeFourStarUnit, threeFourStarQuantity)
                 }
               >
                 新增

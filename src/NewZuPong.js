@@ -88,31 +88,31 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
       .filter((e) => e.length !== 0)
       .map((numbers) => numbers.length);
 
-    if (type === "兩") {
+    if (type === 2) {
       pairs = calculateTwoStarCombinations(pillars);
       total = Math.ceil(price * pairs * quantity);
-      pairsCost = Math.ceil(71.55 * pairs * quantity);
+      pairsCost = Math.ceil(71.7 * pairs * quantity);
       cost = pairsCost;
-    } else if (type === "三") {
+    } else if (type === 3) {
       triplets = calculateThreeStarCombinations(pillars);
       total = Math.ceil(price * triplets * quantity);
       tripletsCost = Math.ceil(62.8 * triplets * quantity);
       cost = tripletsCost;
-    } else if (type === "四") {
+    } else if (type === 4) {
       quads = calculateFourStarCombinations(pillars);
       total = Math.ceil(price * quads * quantity);
       quadsCost = Math.ceil(51 * quads * quantity);
       cost = quadsCost;
-    } else if (type === "兩三") {
+    } else if (type === 23) {
       pairs = calculateTwoStarCombinations(pillars);
       triplets = calculateThreeStarCombinations(pillars);
       total =
         Math.ceil(price * pairs * quantity) +
         Math.ceil(price * triplets * quantity);
-      pairsCost = Math.ceil(71.55 * pairs * quantity);
+      pairsCost = Math.ceil(71.7 * pairs * quantity);
       tripletsCost = Math.ceil(62.8 * triplets * quantity);
       cost = pairsCost + tripletsCost;
-    } else if (type === "兩三四") {
+    } else if (type === 234) {
       pairs = calculateTwoStarCombinations(pillars);
       triplets = calculateThreeStarCombinations(pillars);
       quads = calculateFourStarCombinations(pillars);
@@ -120,7 +120,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
         Math.ceil(price * pairs * quantity) +
         Math.ceil(price * triplets * quantity) +
         Math.ceil(price * quads * quantity);
-      pairsCost = Math.ceil(71.55 * pairs * quantity);
+      pairsCost = Math.ceil(71.7 * pairs * quantity);
       tripletsCost = Math.ceil(62.8 * triplets * quantity);
       quadsCost = Math.ceil(51 * quads * quantity);
       cost = pairsCost + tripletsCost + quadsCost;
@@ -136,7 +136,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
     }
 
     const newItem = {
-      numbers,
+      numbers: numbers.filter((e) => e.length !== 0),
       subtype: "zupong",
       type,
       clientCost: price,
@@ -304,14 +304,14 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
 
         <div className="section">
           {Array.from({ length: 9 }, (_, i) => i).map((value) => (
-            <div>
+            <div key={value}>
               <div
                 className="selectedNumbers"
                 style={index === value ? { backgroundColor: "orange" } : {}}
                 onClick={() => changePillar(value)}
               >
                 {numbers[value].map((number) => (
-                  <span>{number}</span>
+                  <span key={number}>{number}</span>
                 ))}
               </div>
               <span>第{zh[value]}柱</span>
@@ -344,7 +344,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
                 </th>
                 <th>
                   <button
-                    onClick={() => addItem("兩", twoStarQuantity)}
+                    onClick={() => addItem(2, twoStarQuantity)}
                     disabled={getNumbersCount() > 1 ? false : true}
                   >
                     新增
@@ -366,7 +366,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
                 </th>
                 <th>
                   <button
-                    onClick={() => addItem("三", threeStarQuantity)}
+                    onClick={() => addItem(3, threeStarQuantity)}
                     disabled={getNumbersCount() > 2 ? false : true}
                   >
                     新增
@@ -388,7 +388,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
                 </th>
                 <th>
                   <button
-                    onClick={() => addItem("四", fourStarQuantity)}
+                    onClick={() => addItem(4, fourStarQuantity)}
                     disabled={getNumbersCount() > 3 ? false : true}
                   >
                     新增
@@ -410,7 +410,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
                 </th>
                 <th>
                   <button
-                    onClick={() => addItem("兩三", twoThreeStarQuantity)}
+                    onClick={() => addItem(23, twoThreeStarQuantity)}
                     disabled={getNumbersCount() > 2 ? false : true}
                   >
                     新增
@@ -432,7 +432,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
                 </th>
                 <th>
                   <button
-                    onClick={() => addItem("兩三四", twoThreeFourStarQuantity)}
+                    onClick={() => addItem(234, twoThreeFourStarQuantity)}
                     disabled={getNumbersCount() > 3 ? false : true}
                   >
                     新增
@@ -454,7 +454,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
                 </th>
                 <th>
                   <button
-                    onClick={() => addItem("三四", threeFourStarQuantity)}
+                    onClick={() => addItem(34, threeFourStarQuantity)}
                     disabled={getNumbersCount() > 3 ? false : true}
                   >
                     新增

@@ -58,7 +58,7 @@ function LianPong() {
     if (type === "2星") {
       pairs = combination(unit, 2);
       total = Math.ceil(price * pairs * quantity);
-      pairsCost = Math.ceil(71.55 * pairs * quantity);
+      pairsCost = Math.ceil(71.7 * pairs * quantity);
       cost = pairsCost;
     } else if (type === "3星") {
       triplets = combination(unit, 3);
@@ -76,7 +76,7 @@ function LianPong() {
       total =
         Math.ceil(price * pairs * quantity) +
         Math.ceil(price * triplets * quantity);
-      pairsCost = Math.ceil(71.55 * pairs * quantity);
+      pairsCost = Math.ceil(71.7 * pairs * quantity);
       tripletsCost = Math.ceil(62.8 * triplets * quantity);
       cost = pairsCost + tripletsCost;
     } else if (type === "234星") {
@@ -87,13 +87,13 @@ function LianPong() {
         Math.ceil(price * pairs * quantity) +
         Math.ceil(price * triplets * quantity) +
         Math.ceil(price * quads * quantity);
-      pairsCost = Math.ceil(71.55 * pairs * quantity);
+      pairsCost = Math.ceil(71.7 * pairs * quantity);
       tripletsCost = Math.ceil(62.8 * triplets * quantity);
       quadsCost = Math.ceil(51 * quads * quantity);
       cost = pairsCost + tripletsCost + quadsCost;
     } else {
       total = Math.ceil(price * 38 * unit * quantity);
-      cost = Math.ceil(2719 * unit * quantity);
+      cost = Math.ceil(2725 * unit * quantity);
     }
 
     const newItem = {
@@ -351,7 +351,7 @@ function LianPong() {
           <div className="detail">
             {items.map((item) =>
               item.type === "車" ? (
-                <span>{`${price} * 38 * ${item.unit} * ${item.quantity} = ${item.total}`}</span>
+                <span>{`${price} * 38 * ${item.quantity} * ${item.unit} = ${item.total}`}</span>
               ) : (
                 <React.Fragment>
                   <span>{`${item.unit} * ${item.type} * ${item.quantity}`}</span>
@@ -380,7 +380,7 @@ function LianPong() {
           <div className="detail">
             {items.map((item) =>
               item.type === "車" ? (
-                <span>{`2719 * ${item.unit} * ${item.quantity} = ${item.cost}`}</span>
+                <span>{`2725 * ${item.quantity} * ${item.unit} = ${item.cost}`}</span>
               ) : (
                 <React.Fragment>
                   <span>{`${item.unit} * ${item.type} * ${item.quantity}`}</span>
@@ -390,7 +390,7 @@ function LianPong() {
                     {item.quads === 0 ? null : `四星：${item.quads}碰`}
                   </span>
                   {item.pairs === 0 ? null : (
-                    <span>{`71.55 * ${item.pairs} * ${item.quantity} = ${item.pairsCost}`}</span>
+                    <span>{`71.7 * ${item.pairs} * ${item.quantity} = ${item.pairsCost}`}</span>
                   )}
                   {item.triplets === 0 ? null : (
                     <span>{`62.8 * ${item.triplets} * ${item.quantity} = ${item.tripletsCost}`}</span>

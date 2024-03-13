@@ -26,7 +26,7 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
       total = Math.ceil(price * 38 * unit * quantity);
     }
 
-    cost = Math.ceil(Math.ceil(2719 * quantity) * unit);
+    cost = Math.ceil(Math.ceil(2725 * quantity) * unit);
 
     const newItem = {
       numbers,
@@ -177,7 +177,7 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
                 </th>
                 <th>
                   <button
-                    onClick={() => addItem("車", carQuantity)}
+                    onClick={() => addItem("car", carQuantity)}
                     disabled={numbers.length > 0 ? false : true}
                   >
                     新增

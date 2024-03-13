@@ -123,7 +123,7 @@ function Zupong() {
     if (type === "2") {
       pairs = calculateTwoStarCombinations(pillars);
       total = Math.ceil(price * pairs * quantity);
-      pairsCost = Math.ceil(71.55 * pairs * quantity);
+      pairsCost = Math.ceil(71.7 * pairs * quantity);
       cost = pairsCost;
     } else if (type === "3") {
       triplets = calculateThreeStarCombinations(pillars);
@@ -141,7 +141,7 @@ function Zupong() {
       total =
         Math.ceil(price * pairs * quantity) +
         Math.ceil(price * triplets * quantity);
-      pairsCost = Math.ceil(71.55 * pairs * quantity);
+      pairsCost = Math.ceil(71.7 * pairs * quantity);
       tripletsCost = Math.ceil(62.8 * triplets * quantity);
       cost = pairsCost + tripletsCost;
     } else if (type === "234") {
@@ -152,7 +152,7 @@ function Zupong() {
         Math.ceil(price * pairs * quantity) +
         Math.ceil(price * triplets * quantity) +
         Math.ceil(price * quads * quantity);
-      pairsCost = Math.ceil(71.55 * pairs * quantity);
+      pairsCost = Math.ceil(71.7 * pairs * quantity);
       tripletsCost = Math.ceil(62.8 * triplets * quantity);
       quadsCost = Math.ceil(51 * quads * quantity);
       cost = pairsCost + tripletsCost + quadsCost;
@@ -487,7 +487,7 @@ function Zupong() {
                   {item.quads === 0 ? null : `四星：${item.quads}碰`}
                 </span>
                 {item.pairs === 0 ? null : (
-                  <span>{`71.55 * ${item.pairs} * ${item.quantity} = ${item.pairsCost}`}</span>
+                  <span>{`71.7 * ${item.pairs} * ${item.quantity} = ${item.pairsCost}`}</span>
                 )}
                 {item.triplets === 0 ? null : (
                   <span>{`62.8 * ${item.triplets} * ${item.quantity} = ${item.tripletsCost}`}</span>

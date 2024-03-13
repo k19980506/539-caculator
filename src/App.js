@@ -11,7 +11,13 @@ function App() {
   const [totalCost, setTotalCost] = useState(0);
   const [price, setPrice] = useState(77);
 
-  const childRef = useRef(null);
+  const lianPongRef = useRef(null);
+  const carRef = useRef(null);
+  const zuPongRef = useRef(null);
+
+  useEffect(() => {
+    console.log(items);
+  }, [items]);
 
   const tabs = [
     {
@@ -22,7 +28,7 @@ function App() {
           price={price}
           totalItems={items}
           f={setItems}
-          ref={childRef}
+          ref={lianPongRef}
         />
       ),
     },
@@ -30,7 +36,7 @@ function App() {
       key: "2",
       label: "全車",
       children: (
-        <Car price={price} totalItems={items} f={setItems} ref={childRef} />
+        <Car price={price} totalItems={items} f={setItems} ref={carRef} />
       ),
     },
     {
@@ -41,12 +47,11 @@ function App() {
           price={price}
           totalItems={items}
           f={setItems}
-          ref={childRef}
+          ref={zuPongRef}
         />
       ),
     },
   ];
-
   const removeItem = (index) => {
     const newItems = [...items];
     newItems.splice(index, 1);
@@ -59,7 +64,9 @@ function App() {
 
   const resetItem = () => {
     setItems([]);
-    childRef.current.reset();
+    lianPongRef.current.reset();
+    carRef.current.reset();
+    zuPongRef.current.reset();
   };
 
   useEffect(() => {
@@ -79,6 +86,15 @@ function App() {
     items.length > 0 ? items.map((item) => item.total).join("+") : "0";
   let costTotalList =
     items.length > 0 ? items.map((item) => item.cost).join("+") : "0";
+
+  const zh = {
+    2: "兩",
+    3: "三",
+    4: "四",
+    23: "兩三",
+    234: "兩三四",
+    34: "三四",
+  };
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -105,7 +121,7 @@ function App() {
           <div>
             {items.map((item, index) => (
               <div className="item" key={index}>
-                {item.type === "車" ? (
+                {item.type === "car" ? (
                   <div style={{ flex: "auto" }}>
                     <p style={{ color: "red", fontWeight: "bold" }}>{`全車`}</p>
                     <p>{`${item.numbers.join(",")}...各${item.quantity}車`}</p>
@@ -114,8 +130,8 @@ function App() {
                   <div style={{ flex: "auto" }}>
                     <p
                       style={{ color: "red", fontWeight: "bold" }}
-                    >{`連碰快速-${item.type}星`}</p>
-                    <p>{`${item.numbers.join(",")} ... ${item.type} x ${
+                    >{`連碰快速-${zh[item.type]}星`}</p>
+                    <p>{`${item.numbers.join(",")} ... ${zh[item.type]} x ${
                       item.quantity
                     }`}</p>
                   </div>
@@ -123,15 +139,13 @@ function App() {
                   <div style={{ flex: "auto" }}>
                     <p
                       style={{ color: "red", fontWeight: "bold" }}
-                    >{`立柱快速-${item.type}星`}</p>
-                    {item.numbers
-                      .filter((numbers) => numbers.length !== 0)
-                      .map((numbers, index) => (
-                        <span>
-                          第{index}柱: {numbers.join(",")} <br />
-                        </span>
-                      ))}
-                    <p>{`${item.type} x ${item.quantity}`}</p>
+                    >{`立柱快速-${zh[item.type]}星`}</p>
+                    {item.numbers.map((numbers, index) => (
+                      <span key={index}>
+                        第{index}柱: {numbers.join(",")} <br />
+                      </span>
+                    ))}
+                    <p>{`${zh[item.type]} x ${item.quantity}`}</p>
                   </div>
                 )}
                 <button onClick={() => removeItem(index)}>刪除</button>
@@ -143,9 +157,9 @@ function App() {
               <div className="detail-client">
                 <span>{`客本：${totalClientCost}`}</span>
                 <div className="detail">
-                  {items.map((item) =>
-                    item.type === "車" ? (
-                      <div>
+                  {items.map((item, index) =>
+                    item.type === "car" ? (
+                      <div key={index}>
                         <span style={{ color: "red", fontWeight: "bold" }}>
                           {`${item.numbers.join(",")}...各${item.quantity}車`}
                           <br />
@@ -156,16 +170,15 @@ function App() {
                         </span>
                       </div>
                     ) : (
-                      <div>
+                      <div key={index}>
                         <span style={{ color: "red", fontWeight: "bold" }}>
                           {item.subtype === "lianpong"
-                            ? `${item.numbers.join(",")} ... ${item.type} x ${
-                                item.quantity
-                              }`
+                            ? `${item.numbers.join(",")} ... ${
+                                zh[item.type]
+                              } x ${item.quantity}`
                             : `${item.numbers
-                                .filter((numbers) => numbers.length !== 0)
                                 .map((numbers) => numbers.length)
-                                .join("顆x")}顆...${item.type}*${
+                                .join("顆x")}顆...${zh[item.type]}*${
                                 item.quantity
                               }`}
                           <br />
@@ -202,29 +215,29 @@ function App() {
               <div className="detail-cost">
                 <span>{`成本：${totalCost}`}</span>
                 <div className="detail">
-                  {items.map((item) =>
-                    item.type === "車" ? (
-                      <div>
+                  {items.map((item, index) =>
+                    item.type === "car" ? (
+                      <div key={index}>
                         <span style={{ color: "red", fontWeight: "bold" }}>
                           {`${item.numbers.join(",")}...各${item.quantity}車`}
                           <br />
                         </span>
                         <span>
-                          {`2719 * ${item.quantity} * ${item.unit}  = ${item.cost}`}
+                          {`2725 * ${item.quantity} * ${item.unit}  = ${item.cost}`}
                           <br />
                         </span>
                       </div>
                     ) : (
-                      <div>
+                      <div key={index}>
                         <span style={{ color: "red", fontWeight: "bold" }}>
                           {item.subtype === "lianpong"
-                            ? `${item.numbers.join(",")} ... ${item.type} x ${
-                                item.quantity
-                              }`
+                            ? `${item.numbers.join(",")} ... ${
+                                zh[item.type]
+                              } x ${item.quantity}`
                             : `${item.numbers
                                 .filter((numbers) => numbers.length !== 0)
                                 .map((numbers) => numbers.length)
-                                .join("顆x")}顆...${item.type}*${
+                                .join("顆x")}顆...${zh[item.type]}*${
                                 item.quantity
                               }`}
                           <br />
@@ -239,7 +252,7 @@ function App() {
                         </span>
                         {item.pairs === 0 ? null : (
                           <span>
-                            {`71.55 * ${item.pairs} * ${item.quantity} = ${item.pairsCost}`}
+                            {`71.7 * ${item.pairs} * ${item.quantity} = ${item.pairsCost}`}
                             <br />
                           </span>
                         )}

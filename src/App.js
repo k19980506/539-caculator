@@ -99,7 +99,7 @@ function App() {
             <div className="detail">
               {items.map((item) =>
                 item.type === "車" ? (
-                  <span>{`${item.clientCost} * 38 * ${item.unit} * ${item.quantity} = ${item.total}`}</span>
+                  <span>{`${item.clientCost} * 38 * ${item.quantity} * ${item.unit} = ${item.total}`}</span>
                 ) : (
                   <React.Fragment>
                     <span>
@@ -132,7 +132,7 @@ function App() {
             <div className="detail">
               {items.map((item) =>
                 item.type === "車" ? (
-                  <span>{`2725 * ${item.unit} * ${item.quantity} = ${item.cost}`}</span>
+                  <span>{`2725 * ${item.quantity} * ${item.unit} = ${item.cost}`}</span>
                 ) : (
                   <React.Fragment>
                     <span>

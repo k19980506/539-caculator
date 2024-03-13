@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  forwardRef,
-  useImperativeHandle,
-} from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
 import "./NewLianPong.css";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
@@ -12,7 +7,6 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
   const [numbers, setNumbers] = useState([]);
 
   const [carQuantity, setCarQuantity] = useState(1);
-  const [items, setItems] = useState([]);
   const [quickNumbersState, setQuickNumbersState] = useState([]);
 
   const addItem = (type, quantity) => {
@@ -37,7 +31,7 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
       cost,
       total,
     };
-    setItems([...totalItems, newItem]);
+    f([...totalItems, newItem]);
   };
 
   function selectQuickNumbers(value) {
@@ -101,10 +95,6 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
       );
     }
   }
-
-  useEffect(() => {
-    f(items);
-  }, [items, f]);
 
   const handleReset = () => {
     setNumbers([]);

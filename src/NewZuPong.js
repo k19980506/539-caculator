@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  forwardRef,
-  useImperativeHandle,
-} from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
 import "./NewZuPong.css";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
@@ -67,7 +62,6 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
   const [twoThreeStarQuantity, setTwoThreeStarQuantity] = useState(1);
   const [twoThreeFourStarQuantity, setTwoThreeFourStarQuantity] = useState(1);
   const [threeFourStarQuantity, setThreeFourStarQuantity] = useState(1);
-  const [items, setItems] = useState([]);
   const [numbersState, setNumbersState] = useState(
     Array.from({ length: 40 }).map((_) => true)
   );
@@ -150,7 +144,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
       tripletsCost,
       quadsCost,
     };
-    setItems([...totalItems, newItem]);
+    f([...totalItems, newItem]);
   };
 
   function selectQuickNumbers(value) {
@@ -229,10 +223,6 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
       setNumbers([...new_numbers]);
     }
   }
-
-  useEffect(() => {
-    f(items);
-  }, [items, f]);
 
   const handleReset = () => {
     setNumbers([[], [], [], [], [], [], [], [], []]);

@@ -323,7 +323,7 @@ function LianPong({ price, items, setItems }) {
             <th>
               <button
                 onClick={() =>
-                  addItem("234星", threeFourStarUnit, threeFourStarQuantity)
+                  addItem("34星", threeFourStarUnit, threeFourStarQuantity)
                 }
               >
                 新增

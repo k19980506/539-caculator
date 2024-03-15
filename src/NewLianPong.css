@@ -15,7 +15,8 @@ div {
   padding: 2px;
 }
 
-.numbers {
+.lnumbers {
+  /* height: 100%; */
   background-color: darkgrey;
   display: grid;
   grid-template-columns: repeat(10, minmax(0, 1fr));

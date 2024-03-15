@@ -46,6 +46,7 @@ function App() {
       cost: totalCost,
       items: items,
       note: values["note"],
+      allowCredit: !!values["allowCredit"],
     };
 
     try {
@@ -66,11 +67,17 @@ function App() {
           resetItem();
           handleCancel();
         } else {
-          throw new Error("API 请求失败");
+          messageApi.open({
+            type: "error",
+            content: "發生錯誤，請檢查資料或聯絡管理人。",
+          });
         }
       });
     } catch (err) {
-      console.log(err);
+      messageApi.open({
+        type: "error",
+        content: "發生錯誤，請檢查資料或聯絡管理人。",
+      });
     }
   };
 
@@ -402,6 +409,7 @@ function App() {
                     date: today,
                     manager: "小沙",
                     isCustomer: true,
+                    allowCredit: false,
                   }}
                   onFinish={onFinish}
                   onFinishFailed={onFinishFailed}
@@ -463,6 +471,17 @@ function App() {
                     }}
                   >
                     <Checkbox>客人</Checkbox>
+                  </Form.Item>
+
+                  <Form.Item
+                    name="allowCredit"
+                    valuePropName="checked"
+                    wrapperCol={{
+                      offset: 8,
+                      span: 16,
+                    }}
+                  >
+                    <Checkbox>週結</Checkbox>
                   </Form.Item>
 
                   <Form.Item

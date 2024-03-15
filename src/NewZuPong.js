@@ -148,7 +148,8 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
     handleReset();
   };
 
-  function selectQuickNumbers(value) {
+  function selectQuickNumbers(e, value) {
+    e?.stopPropagation();
     let new_numbers = [...numbers];
 
     if (quickNumbersState[value]) {
@@ -199,7 +200,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
                   ? { color: "white", backgroundColor: "black" }
                   : { color: "black", backgroundColor: "white" }
               }
-              onClick={() => selectQuickNumbers(value)}
+              onClick={(e) => selectQuickNumbers(e, value)}
             >
               {value}
             </button>

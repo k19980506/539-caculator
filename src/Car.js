@@ -1,7 +1,7 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 import "./NewLianPong.css";
 import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Space } from "antd";
+import { Dropdown, Space, Input } from "antd";
 
 const Car = forwardRef(({ f, price, totalItems }, ref) => {
   const [numbers, setNumbers] = useState([]);
@@ -106,24 +106,43 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
     reset: handleReset,
   }));
 
+  const quickClick = (value) => {
+    const regex = /(\d{2})(?=\D|$)/g;
+
+    const numbersArray = value
+      .split(regex)
+      .map((v) => parseInt(v))
+      .filter((e) => !isNaN(e));
+
+    setNumbers([...numbersArray]);
+  };
+
   return (
     <div className="sub_container">
-      <div className="numbers">
-        {Array.from({ length: 39 }, (_, i) => i + 1).map((value) => (
-          <button
-            key={value}
-            className="number"
-            style={
-              numbers.includes(value)
-                ? { color: "white", backgroundColor: "black" }
-                : { color: "black", backgroundColor: "white" }
-            }
-            onClick={() => selectNumbers(value)}
-          >
-            {value}
-          </button>
-        ))}
+      <div>
+        <Input
+          style={{ margin: "5px" }}
+          placeholder="快速選球"
+          onBlur={(e) => quickClick(e.target.value)}
+        />
+        <div className="lnumbers">
+          {Array.from({ length: 39 }, (_, i) => i + 1).map((value) => (
+            <button
+              key={value}
+              className="number"
+              style={
+                numbers.includes(value)
+                  ? { color: "white", backgroundColor: "black" }
+                  : { color: "black", backgroundColor: "white" }
+              }
+              onClick={() => selectNumbers(value)}
+            >
+              {value}
+            </button>
+          ))}
+        </div>
       </div>
+
       <div className="result">
         <div>
           <Dropdown

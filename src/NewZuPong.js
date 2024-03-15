@@ -145,6 +145,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
       quadsCost,
     };
     f([...totalItems, newItem]);
+    handleReset();
   };
 
   function selectQuickNumbers(value) {
@@ -180,6 +181,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
 
       setNumbers([...new_numbers]);
     }
+    setIndex((index + 1) % 9);
   }
 
   const quickItems = [
@@ -228,6 +230,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
     setNumbers([[], [], [], [], [], [], [], [], []]);
     setNumbersState(Array.from({ length: 40 }).map((_) => true));
     setQuickNumbersState([]);
+    setIndex(0);
   };
 
   useImperativeHandle(ref, () => ({
@@ -329,7 +332,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
                     onChange={(e) =>
                       setTwoStarQuantity(parseFloat(e.target.value))
                     }
-                    step="1"
+                    step="0.1"
                   />
                 </th>
                 <th>
@@ -351,7 +354,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
                     onChange={(e) =>
                       setThreeStarQuantity(parseFloat(e.target.value))
                     }
-                    step="1"
+                    step="0.1"
                   />
                 </th>
                 <th>
@@ -373,7 +376,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
                     onChange={(e) =>
                       setFourStarQuantity(parseFloat(e.target.value))
                     }
-                    step="1"
+                    step="0.1"
                   />
                 </th>
                 <th>
@@ -395,7 +398,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
                     onChange={(e) =>
                       setTwoThreeStarQuantity(parseFloat(e.target.value))
                     }
-                    step="1"
+                    step="0.1"
                   />
                 </th>
                 <th>
@@ -417,7 +420,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
                     onChange={(e) =>
                       setTwoThreeFourStarQuantity(parseFloat(e.target.value))
                     }
-                    step="1"
+                    step="0.1"
                   />
                 </th>
                 <th>
@@ -439,7 +442,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
                     onChange={(e) =>
                       setThreeFourStarQuantity(parseFloat(e.target.value))
                     }
-                    step="1"
+                    step="0.1"
                   />
                 </th>
                 <th>

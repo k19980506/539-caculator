@@ -32,6 +32,7 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
       total,
     };
     f([...totalItems, newItem]);
+    handleReset();
   };
 
   function selectQuickNumbers(value) {

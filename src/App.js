@@ -1,9 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
-import { Tabs } from "antd";
+import {
+  Button,
+  Checkbox,
+  DatePicker,
+  Form,
+  Input,
+  message,
+  Modal,
+  Select,
+  Tabs,
+} from "antd";
 import NewLianPong from "./NewLianPong";
 import Car from "./Car";
 import NewZuPong from "./NewZuPong";
+import dayjs from "dayjs";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -15,9 +26,61 @@ function App() {
   const carRef = useRef(null);
   const zuPongRef = useRef(null);
 
-  useEffect(() => {
-    console.log(items);
-  }, [items]);
+  const [open, setOpen] = useState(false);
+  const { TextArea } = Input;
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const today = new dayjs();
+
+  const showModal = () => {
+    setOpen(true);
+  };
+
+  const onFinish = async (values) => {
+    const data = {
+      date: values["date"].format("YYYY-MM-DD"),
+      manager: values["manager"],
+      customer: values["customer"],
+      content: values["content"],
+      clientCost: values["isCustomer"] ? totalClientCost : 0,
+      cost: totalCost,
+      items: items,
+      note: values["note"],
+    };
+
+    try {
+      const url = "http://localhost:8000/api/ftn_records";
+
+      await fetch(url, {
+        method: "post",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then(async (response) => {
+        if (response.ok) {
+          messageApi.open({
+            type: "success",
+            content: "提交成功",
+          });
+          resetItem();
+          handleCancel();
+        } else {
+          throw new Error("API 请求失败");
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
 
   const tabs = [
     {
@@ -52,6 +115,7 @@ function App() {
       ),
     },
   ];
+
   const removeItem = (index) => {
     const newItems = [...items];
     newItems.splice(index, 1);
@@ -64,9 +128,9 @@ function App() {
 
   const resetItem = () => {
     setItems([]);
-    lianPongRef.current.reset();
-    carRef.current.reset();
-    zuPongRef.current.reset();
+    lianPongRef.current?.reset();
+    carRef.current?.reset();
+    zuPongRef.current?.reset();
   };
 
   useEffect(() => {
@@ -304,6 +368,133 @@ function App() {
               : `溢收：${totalClientCost} - ${totalCost} = ${
                   totalClientCost - totalCost
                 }`}
+            <>
+              {contextHolder}
+              <Button
+                style={
+                  items.length === 0
+                    ? { width: "100%", display: "none" }
+                    : { width: "100%" }
+                }
+                type="primary"
+                onClick={showModal}
+              >
+                提交訂單
+              </Button>
+              <Modal
+                open={open}
+                title="539訂單"
+                footer={[]}
+                onCancel={handleCancel}
+              >
+                <Form
+                  name="basic"
+                  labelCol={{
+                    span: 8,
+                  }}
+                  wrapperCol={{
+                    span: 16,
+                  }}
+                  style={{
+                    maxWidth: 600,
+                  }}
+                  initialValues={{
+                    date: today,
+                    manager: "小沙",
+                    isCustomer: true,
+                  }}
+                  onFinish={onFinish}
+                  onFinishFailed={onFinishFailed}
+                  autoComplete="off"
+                >
+                  <Form.Item
+                    label="日期"
+                    name="date"
+                    rules={[
+                      {
+                        required: true,
+                        message: "請選擇日期!",
+                      },
+                    ]}
+                  >
+                    <DatePicker />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="幹部"
+                    name="manager"
+                    rules={[
+                      {
+                        required: true,
+                        message: "請選擇幹部!",
+                      },
+                    ]}
+                  >
+                    <Select
+                      style={{ width: 120 }}
+                      options={[
+                        { value: "小沙", label: "小沙" },
+                        { value: "星空", label: "星空" },
+                        { value: "水母", label: "水母" },
+                        { value: "大師", label: "大師" },
+                      ]}
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="客稱"
+                    name="customer"
+                    rules={[
+                      {
+                        required: true,
+                        message: "請輸入客稱!",
+                      },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="isCustomer"
+                    valuePropName="checked"
+                    wrapperCol={{
+                      offset: 8,
+                      span: 16,
+                    }}
+                  >
+                    <Checkbox>客人</Checkbox>
+                  </Form.Item>
+
+                  <Form.Item
+                    label="牌支內容"
+                    name="content"
+                    rules={[
+                      {
+                        required: true,
+                        message: "請輸入牌支內容!",
+                      },
+                    ]}
+                  >
+                    <TextArea rows={10} />
+                  </Form.Item>
+
+                  <Form.Item label="備註" name="note">
+                    <TextArea rows={4} />
+                  </Form.Item>
+
+                  <Form.Item
+                    wrapperCol={{
+                      offset: 8,
+                      span: 16,
+                    }}
+                  >
+                    <Button type="primary" htmlType="submit">
+                      送出
+                    </Button>
+                  </Form.Item>
+                </Form>
+              </Modal>
+            </>
           </div>
         </div>
       </div>

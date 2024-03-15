@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  forwardRef,
-  useImperativeHandle,
-} from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
 import "./NewLianPong.css";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
@@ -29,7 +24,6 @@ const NewLianPong = forwardRef(({ f, price, totalItems }, ref) => {
   const [twoThreeStarQuantity, setTwoThreeStarQuantity] = useState(1);
   const [twoThreeFourStarQuantity, setTwoThreeFourStarQuantity] = useState(1);
   const [threeFourStarQuantity, setThreeFourStarQuantity] = useState(1);
-  const [items, setItems] = useState([]);
   const [quickNumbersState, setQuickNumbersState] = useState([]);
 
   const addItem = (type, quantity) => {
@@ -106,7 +100,8 @@ const NewLianPong = forwardRef(({ f, price, totalItems }, ref) => {
       tripletsCost,
       quadsCost,
     };
-    setItems([...totalItems, newItem]);
+    f([...totalItems, newItem]);
+    handleReset();
   };
 
   function selectQuickNumbers(value) {
@@ -170,10 +165,6 @@ const NewLianPong = forwardRef(({ f, price, totalItems }, ref) => {
       );
     }
   }
-
-  useEffect(() => {
-    f(items);
-  }, [items, f]);
 
   const handleReset = () => {
     setNumbers([]);

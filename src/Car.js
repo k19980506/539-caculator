@@ -58,6 +58,26 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
     }
   }
 
+  function getRandomNumbers(n) {
+    const result = [];
+
+    while (result.length < n) {
+      const randomNumber = Math.floor(Math.random() * 39) + 1;
+      if (!result.includes(randomNumber)) {
+        result.push(randomNumber);
+      }
+    }
+
+    return result;
+  }
+
+  function selectQuickPieces(value) {
+    const addNumbers = getRandomNumbers(value).sort(function (a, b) {
+      return a - b;
+    });
+    setNumbers([...addNumbers]);
+  }
+
   const quickItems = [
     {
       key: "1",
@@ -76,6 +96,23 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
               onClick={() => selectQuickNumbers(value)}
             >
               {value}
+            </button>
+          ))}
+        </div>
+      ),
+    },
+    {
+      key: "2",
+      label: (
+        <div>
+          顆數：
+          {Array.from({ length: 10 }, (_, i) => i).map((value) => (
+            <button
+              key={value}
+              className="number"
+              onClick={() => selectQuickPieces(value + 5)}
+            >
+              {value + 5}
             </button>
           ))}
         </div>

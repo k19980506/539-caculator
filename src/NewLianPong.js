@@ -127,6 +127,26 @@ const NewLianPong = forwardRef(({ f, price, totalItems }, ref) => {
     }
   }
 
+  function getRandomNumbers(n) {
+    const result = [];
+
+    while (result.length < n) {
+      const randomNumber = Math.floor(Math.random() * 39) + 1;
+      if (!result.includes(randomNumber)) {
+        result.push(randomNumber);
+      }
+    }
+
+    return result;
+  }
+
+  function selectQuickPieces(value) {
+    const addNumbers = getRandomNumbers(value).sort(function (a, b) {
+      return a - b;
+    });
+    setNumbers([...addNumbers]);
+  }
+
   const quickItems = [
     {
       key: "1",
@@ -145,6 +165,23 @@ const NewLianPong = forwardRef(({ f, price, totalItems }, ref) => {
               onClick={() => selectQuickNumbers(value)}
             >
               {value}
+            </button>
+          ))}
+        </div>
+      ),
+    },
+    {
+      key: "2",
+      label: (
+        <div>
+          顆數：
+          {Array.from({ length: 10 }, (_, i) => i).map((value) => (
+            <button
+              key={value}
+              className="number"
+              onClick={() => selectQuickPieces(value + 5)}
+            >
+              {value + 5}
             </button>
           ))}
         </div>
@@ -177,8 +214,10 @@ const NewLianPong = forwardRef(({ f, price, totalItems }, ref) => {
 
   const quickClick = (value) => {
     const regex = /[^0-9]+/;
-    // /(\d{2})(?=\D|$)/g
-    const numbersArray = value.split(regex).map((v) => parseInt(v));
+    const numbersArray = value
+      .split(regex)
+      .map((v) => parseInt(v))
+      .filter((e) => !isNaN(e));
 
     setNumbers([...numbersArray]);
   };

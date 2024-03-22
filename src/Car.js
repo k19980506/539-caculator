@@ -1,33 +1,39 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 import "./NewLianPong.css";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Space, Input } from "antd";
+import { Dropdown, Space, Input, Button } from "antd";
 
 const Car = forwardRef(({ f, price, totalItems }, ref) => {
   const [numbers, setNumbers] = useState([]);
 
   const [carQuantity, setCarQuantity] = useState(1);
   const [quickNumbersState, setQuickNumbersState] = useState([]);
+  const [addCost, setAddCost] = useState(0);
 
   const addItem = (type, quantity) => {
     let unit = numbers.length;
     let total = 0;
     let cost = 0;
+    let carCost = Math.ceil((71.7 + addCost) * 38);
 
-    if (price > 78) {
+    if (price + addCost > 78) {
       total = 3000;
     } else {
-      total = Math.ceil(Math.ceil(price * 38 * quantity) * unit);
+      total = Math.ceil(
+        Math.ceil(Math.ceil((price + addCost) * 38) * quantity) * unit
+      );
     }
 
-    cost = Math.ceil(Math.ceil(2725 * quantity) * unit);
+    cost = Math.ceil(Math.ceil(carCost * quantity) * unit);
 
     const newItem = {
       numbers,
       type,
       quantity,
       unit,
-      clientCost: price,
+      clientCost: price + addCost,
+      carCost,
       cost,
       total,
     };
@@ -137,6 +143,7 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
   const handleReset = () => {
     setNumbers([]);
     setQuickNumbersState([]);
+    setAddCost(0);
   };
 
   useImperativeHandle(ref, () => ({
@@ -181,22 +188,48 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
       </div>
 
       <div className="result">
-        <div>
-          <Dropdown
-            menu={{
-              items: quickItems,
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              alignItems: "center",
             }}
           >
-            <button
-              onClick={(e) => e.preventDefault()}
-              style={{ float: "right" }}
+            <div>漲價:</div>
+            <Button
+              type="primary"
+              icon={<MinusOutlined />}
+              shape="circle"
+              size="small"
+              onClick={() => setAddCost(addCost - 1)}
+            ></Button>
+            <label style={{ fontSize: "x-large" }}>{addCost}</label>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              shape="circle"
+              size="small"
+              onClick={() => setAddCost(addCost + 1)}
+            ></Button>
+          </div>
+          <div>
+            <Dropdown
+              menu={{
+                items: quickItems,
+              }}
             >
-              <Space onClick={(e) => e.preventDefault()}>
-                快速選擇
-                <DownOutlined />
-              </Space>
-            </button>
-          </Dropdown>
+              <button
+                onClick={(e) => e.preventDefault()}
+                style={{ float: "right" }}
+              >
+                <Space onClick={(e) => e.preventDefault()}>
+                  快速選擇
+                  <DownOutlined />
+                </Space>
+              </button>
+            </Dropdown>
+          </div>
         </div>
 
         <div className="selectedNumbers">{numbers.join(",")}</div>

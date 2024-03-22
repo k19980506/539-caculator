@@ -236,7 +236,7 @@ function App() {
                           <br />
                         </span>
                         <span>
-                          {`${price} * 38 * ${item.quantity} * ${item.unit} = ${item.total}`}
+                          {`${item.clientCost} * 38 * ${item.quantity} * ${item.unit} = ${item.total}`}
                           <br />
                         </span>
                       </div>
@@ -294,7 +294,7 @@ function App() {
                           <br />
                         </span>
                         <span>
-                          {`2725 * ${item.quantity} * ${item.unit}  = ${item.cost}`}
+                          {`${item.carCost} * ${item.quantity} * ${item.unit}  = ${item.cost}`}
                           <br />
                         </span>
                       </div>

@@ -17,7 +17,7 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
     if (price > 78) {
       total = 3000;
     } else {
-      total = Math.ceil(price * 38 * unit * quantity);
+      total = Math.ceil(Math.ceil(price * 38 * quantity) * unit);
     }
 
     cost = Math.ceil(Math.ceil(2725 * quantity) * unit);

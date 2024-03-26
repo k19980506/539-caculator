@@ -66,6 +66,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
     Array.from({ length: 40 }).map((_) => true)
   );
   const [quickNumbersState, setQuickNumbersState] = useState([]);
+  const [quickNumbersIndex, setQuickNumbersIndex] = useState({});
   const [index, setIndex] = useState(0);
 
   const addItem = (type, quantity) => {
@@ -152,18 +153,22 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
     e?.stopPropagation();
     let new_numbers = [...numbers];
 
-    if (quickNumbersState[value]) {
+    if (quickNumbersState[value] && quickNumbersIndex[value] === index) {
       quickNumbersState[value] = false;
       setQuickNumbersState([...quickNumbersState]);
       const deleteNumbers = numbers[index].filter(
-        (number) => number % 10 !== value
+        (number) => number % 10 === value
       );
       deleteNumbers.forEach((number) => (numbersState[number] = true));
+      setNumbersState([...numbersState]);
       new_numbers[index] = numbers[index].filter(
         (item) => !deleteNumbers.includes(item)
       );
-      setNumbers([...new_numbers]);
-    } else {
+      setNumbers(new_numbers);
+      quickNumbersIndex[value] = undefined;
+      setQuickNumbersIndex(quickNumbersIndex);
+      setIndex((index + 1) % 9);
+    } else if (!quickNumbersState[value]) {
       const addNumbers = Array.from(
         { length: 39 },
         (_, index) => index + 1
@@ -172,17 +177,18 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
       addNumbers.forEach((number) => (numbersState[number] = false));
       setNumbersState([...numbersState]);
       quickNumbersState[value] = true;
-      setQuickNumbersState([...quickNumbersState]);
+      setQuickNumbersState(quickNumbersState);
       new_numbers[index] = [...numbers[index], ...addNumbers].sort(function (
         a,
         b
       ) {
         return a - b;
       });
-
+      quickNumbersIndex[value] = index;
+      setQuickNumbersIndex(quickNumbersIndex);
       setNumbers([...new_numbers]);
+      setIndex((index + 1) % 9);
     }
-    setIndex((index + 1) % 9);
   }
 
   const quickItems = [

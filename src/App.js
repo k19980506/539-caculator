@@ -53,7 +53,7 @@ function App() {
       const url = "http://localhost:8000/api/ftn_records";
 
       await fetch(url, {
-        method: "post",
+        method: "POST",
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
@@ -95,7 +95,7 @@ function App() {
       label: "連碰快速",
       children: (
         <NewLianPong
-          price={price}
+          price={parseInt(price)}
           totalItems={items}
           f={setItems}
           ref={lianPongRef}
@@ -106,7 +106,12 @@ function App() {
       key: "2",
       label: "全車",
       children: (
-        <Car price={price} totalItems={items} f={setItems} ref={carRef} />
+        <Car
+          price={parseInt(price)}
+          totalItems={items}
+          f={setItems}
+          ref={carRef}
+        />
       ),
     },
     {
@@ -114,7 +119,7 @@ function App() {
       label: "立柱快速",
       children: (
         <NewZuPong
-          price={price}
+          price={parseInt(price)}
           totalItems={items}
           f={setItems}
           ref={zuPongRef}

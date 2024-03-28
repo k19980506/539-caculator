@@ -38,8 +38,8 @@ for i in range(1, len(lottery_data)):
     # 更新前一天的號碼集合
     previous_numbers = set(current_numbers)
 
-print(f"與前一天開出任一相同號碼的天數：{continuous_count}")
-print(f"總共有 {continuous_numbers_count} 個號碼被連續開出")
+# print(f"與前一天開出任一相同號碼的天數：{continuous_count}")
+# print(f"總共有 {continuous_numbers_count} 個號碼被連續開出")
 
 
 # 遍歷所有開獎結果，計算每個號碼的出現次數

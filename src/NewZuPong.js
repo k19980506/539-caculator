@@ -1,7 +1,7 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 import "./NewZuPong.css";
 import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Space } from "antd";
+import { Col, Dropdown, Row, Space } from "antd";
 
 function calculateTwoStarCombinations(pillars) {
   const n = pillars.length;
@@ -197,7 +197,7 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
       label: (
         <div>
           尾數：
-          {Array.from({ length: 10 }, (_, i) => i).map((value) => (
+          {Array.from({ length: 5 }, (_, i) => i).map((value) => (
             <button
               key={value}
               className="number"
@@ -209,6 +209,28 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
               onClick={(e) => selectQuickNumbers(e, value)}
             >
               {value}
+            </button>
+          ))}
+        </div>
+      ),
+    },
+    {
+      key: "2",
+      label: (
+        <div>
+          尾數：
+          {Array.from({ length: 5 }, (_, i) => i).map((value) => (
+            <button
+              key={value + 5}
+              className="number"
+              style={
+                quickNumbersState[value + 5]
+                  ? { color: "white", backgroundColor: "black" }
+                  : { color: "black", backgroundColor: "white" }
+              }
+              onClick={(e) => selectQuickNumbers(e, value + 5)}
+            >
+              {value + 5}
             </button>
           ))}
         </div>
@@ -264,208 +286,216 @@ const NewZuPong = forwardRef(({ f, price, totalItems }, ref) => {
 
   return (
     <div className="sub_container">
-      <div className="numbers">
-        {Array.from({ length: 39 }, (_, i) => i + 1).map((value) => (
-          <button
-            key={value}
-            className="number"
-            style={
-              !canSelectNumber(value)
-                ? { color: "white", backgroundColor: "darkgrey" }
-                : numbers[index].includes(value)
-                ? { color: "white", backgroundColor: "black" }
-                : { color: "black", backgroundColor: "white" }
-            }
-            disabled={!canSelectNumber(value)}
-            onClick={() => selectNumbers(value)}
-          >
-            {value}
-          </button>
-        ))}
-      </div>
-      <div className="result">
-        <div>
-          <Dropdown
-            menu={{
-              items: quickItems,
-            }}
-          >
-            <button
-              onClick={(e) => e.preventDefault()}
-              style={{ float: "right" }}
-            >
-              <Space onClick={(e) => e.preventDefault()}>
-                快速選擇
-                <DownOutlined />
-              </Space>
-            </button>
-          </Dropdown>
-        </div>
-
-        <div className="section">
-          {Array.from({ length: 9 }, (_, i) => i).map((value) => (
-            <div key={value}>
-              <div
-                className="selectedNumbers"
-                style={index === value ? { backgroundColor: "orange" } : {}}
-                onClick={() => changePillar(value)}
+      <Row>
+        <Col flex={1}>
+          <div className="numbers">
+            {Array.from({ length: 39 }, (_, i) => i + 1).map((value) => (
+              <button
+                key={value}
+                className="number"
+                style={
+                  !canSelectNumber(value)
+                    ? { color: "white", backgroundColor: "darkgrey" }
+                    : numbers[index].includes(value)
+                    ? { color: "white", backgroundColor: "black" }
+                    : { color: "black", backgroundColor: "white" }
+                }
+                disabled={!canSelectNumber(value)}
+                onClick={() => selectNumbers(value)}
               >
-                {numbers[value].map((number) => (
-                  <span key={number}>{number}</span>
-                ))}
-              </div>
-              <span>第{zh[value]}柱</span>
+                {value}
+              </button>
+            ))}
+          </div>
+        </Col>
+        <Col flex={1}>
+          <div className="result">
+            <div>
+              <Dropdown
+                menu={{
+                  items: quickItems,
+                }}
+              >
+                <button
+                  onClick={(e) => e.preventDefault()}
+                  style={{ float: "right" }}
+                >
+                  <Space onClick={(e) => e.preventDefault()}>
+                    快速選擇
+                    <DownOutlined />
+                  </Space>
+                </button>
+              </Dropdown>
             </div>
-          ))}
-        </div>
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>種類</th>
-                <th>球數</th>
-                <th>倍數</th>
-                <th>動作</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>2星</th>
-                <th>{getNumbersCount()}</th>
-                <th>
-                  <input
-                    type="number"
-                    value={twoStarQuantity}
-                    onChange={(e) =>
-                      setTwoStarQuantity(parseFloat(e.target.value))
-                    }
-                    step="0.1"
-                  />
-                </th>
-                <th>
-                  <button
-                    onClick={() => addItem(2, twoStarQuantity)}
-                    disabled={getNumbersCount() > 1 ? false : true}
+
+            <div className="section">
+              {Array.from({ length: 9 }, (_, i) => i).map((value) => (
+                <div key={value}>
+                  <div
+                    className="selectedNumbers"
+                    style={index === value ? { backgroundColor: "orange" } : {}}
+                    onClick={() => changePillar(value)}
                   >
-                    新增
-                  </button>
-                </th>
-              </tr>
-              <tr>
-                <th>3星</th>
-                <th>{getNumbersCount()}</th>
-                <th>
-                  <input
-                    type="number"
-                    value={threeStarQuantity}
-                    onChange={(e) =>
-                      setThreeStarQuantity(parseFloat(e.target.value))
-                    }
-                    step="0.1"
-                  />
-                </th>
-                <th>
-                  <button
-                    onClick={() => addItem(3, threeStarQuantity)}
-                    disabled={getNumbersCount() > 2 ? false : true}
-                  >
-                    新增
-                  </button>
-                </th>
-              </tr>
-              <tr>
-                <th>4星</th>
-                <th>{getNumbersCount()}</th>
-                <th>
-                  <input
-                    type="number"
-                    value={fourStarQuantity}
-                    onChange={(e) =>
-                      setFourStarQuantity(parseFloat(e.target.value))
-                    }
-                    step="0.1"
-                  />
-                </th>
-                <th>
-                  <button
-                    onClick={() => addItem(4, fourStarQuantity)}
-                    disabled={getNumbersCount() > 3 ? false : true}
-                  >
-                    新增
-                  </button>
-                </th>
-              </tr>
-              <tr>
-                <th>23星</th>
-                <th>{getNumbersCount()}</th>
-                <th>
-                  <input
-                    type="number"
-                    value={twoThreeStarQuantity}
-                    onChange={(e) =>
-                      setTwoThreeStarQuantity(parseFloat(e.target.value))
-                    }
-                    step="0.1"
-                  />
-                </th>
-                <th>
-                  <button
-                    onClick={() => addItem(23, twoThreeStarQuantity)}
-                    disabled={getNumbersCount() > 2 ? false : true}
-                  >
-                    新增
-                  </button>
-                </th>
-              </tr>
-              <tr>
-                <th>234星</th>
-                <th>{getNumbersCount()}</th>
-                <th>
-                  <input
-                    type="number"
-                    value={twoThreeFourStarQuantity}
-                    onChange={(e) =>
-                      setTwoThreeFourStarQuantity(parseFloat(e.target.value))
-                    }
-                    step="0.1"
-                  />
-                </th>
-                <th>
-                  <button
-                    onClick={() => addItem(234, twoThreeFourStarQuantity)}
-                    disabled={getNumbersCount() > 3 ? false : true}
-                  >
-                    新增
-                  </button>
-                </th>
-              </tr>
-              <tr>
-                <th>34星</th>
-                <th>{getNumbersCount()}</th>
-                <th>
-                  <input
-                    type="number"
-                    value={threeFourStarQuantity}
-                    onChange={(e) =>
-                      setThreeFourStarQuantity(parseFloat(e.target.value))
-                    }
-                    step="0.1"
-                  />
-                </th>
-                <th>
-                  <button
-                    onClick={() => addItem(34, threeFourStarQuantity)}
-                    disabled={getNumbersCount() > 3 ? false : true}
-                  >
-                    新增
-                  </button>
-                </th>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <button onClick={handleReset}>清除</button>
-      </div>
+                    {numbers[value].map((number) => (
+                      <span key={number}>{number}</span>
+                    ))}
+                  </div>
+                  <span>第{zh[value]}柱</span>
+                </div>
+              ))}
+            </div>
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>種類</th>
+                    <th>球數</th>
+                    <th>倍數</th>
+                    <th>動作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>2星</th>
+                    <th>{getNumbersCount()}</th>
+                    <th>
+                      <input
+                        type="number"
+                        value={twoStarQuantity}
+                        onChange={(e) =>
+                          setTwoStarQuantity(parseFloat(e.target.value))
+                        }
+                        step="0.1"
+                      />
+                    </th>
+                    <th>
+                      <button
+                        onClick={() => addItem(2, twoStarQuantity)}
+                        disabled={getNumbersCount() > 1 ? false : true}
+                      >
+                        新增
+                      </button>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th>3星</th>
+                    <th>{getNumbersCount()}</th>
+                    <th>
+                      <input
+                        type="number"
+                        value={threeStarQuantity}
+                        onChange={(e) =>
+                          setThreeStarQuantity(parseFloat(e.target.value))
+                        }
+                        step="0.1"
+                      />
+                    </th>
+                    <th>
+                      <button
+                        onClick={() => addItem(3, threeStarQuantity)}
+                        disabled={getNumbersCount() > 2 ? false : true}
+                      >
+                        新增
+                      </button>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th>4星</th>
+                    <th>{getNumbersCount()}</th>
+                    <th>
+                      <input
+                        type="number"
+                        value={fourStarQuantity}
+                        onChange={(e) =>
+                          setFourStarQuantity(parseFloat(e.target.value))
+                        }
+                        step="0.1"
+                      />
+                    </th>
+                    <th>
+                      <button
+                        onClick={() => addItem(4, fourStarQuantity)}
+                        disabled={getNumbersCount() > 3 ? false : true}
+                      >
+                        新增
+                      </button>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th>23星</th>
+                    <th>{getNumbersCount()}</th>
+                    <th>
+                      <input
+                        type="number"
+                        value={twoThreeStarQuantity}
+                        onChange={(e) =>
+                          setTwoThreeStarQuantity(parseFloat(e.target.value))
+                        }
+                        step="0.1"
+                      />
+                    </th>
+                    <th>
+                      <button
+                        onClick={() => addItem(23, twoThreeStarQuantity)}
+                        disabled={getNumbersCount() > 2 ? false : true}
+                      >
+                        新增
+                      </button>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th>234星</th>
+                    <th>{getNumbersCount()}</th>
+                    <th>
+                      <input
+                        type="number"
+                        value={twoThreeFourStarQuantity}
+                        onChange={(e) =>
+                          setTwoThreeFourStarQuantity(
+                            parseFloat(e.target.value)
+                          )
+                        }
+                        step="0.1"
+                      />
+                    </th>
+                    <th>
+                      <button
+                        onClick={() => addItem(234, twoThreeFourStarQuantity)}
+                        disabled={getNumbersCount() > 3 ? false : true}
+                      >
+                        新增
+                      </button>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th>34星</th>
+                    <th>{getNumbersCount()}</th>
+                    <th>
+                      <input
+                        type="number"
+                        value={threeFourStarQuantity}
+                        onChange={(e) =>
+                          setThreeFourStarQuantity(parseFloat(e.target.value))
+                        }
+                        step="0.1"
+                      />
+                    </th>
+                    <th>
+                      <button
+                        onClick={() => addItem(34, threeFourStarQuantity)}
+                        disabled={getNumbersCount() > 3 ? false : true}
+                      >
+                        新增
+                      </button>
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <button onClick={handleReset}>清除</button>
+          </div>
+        </Col>
+      </Row>
     </div>
   );
 });

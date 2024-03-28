@@ -4,7 +4,7 @@ button {
   background-color: aliceblue;
 }
 
-button:hover {
+button:enabled:hover {
   background-color: #45a049;
 }
 

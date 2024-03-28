@@ -39,7 +39,7 @@ th > button {
 }
 
 th > button:disabled {
-  background-color: black;
+  cursor: not-allowed;
 }
 
 table {

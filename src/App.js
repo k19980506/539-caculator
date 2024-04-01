@@ -44,8 +44,10 @@ function App() {
       manager: values["manager"],
       customer: values["customer"],
       content: values["content"],
-      clientCost: values["isCustomer"] ? totalClientCost : 0,
-      cost: totalCost,
+      clientCost: values["isCustomer"]
+        ? totalClientCost + parseInt(values["add_client_cost"])
+        : 0,
+      cost: totalCost + parseInt(values["add_cost"]),
       items: items,
       note: values["note"],
       allowCredit: !!values["allowCredit"],
@@ -424,6 +426,8 @@ function App() {
                       manager: "小沙",
                       isCustomer: true,
                       allowCredit: false,
+                      add_cost: 0,
+                      add_client_cost: 0,
                     }}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
@@ -509,6 +513,14 @@ function App() {
                       ]}
                     >
                       <TextArea rows={10} />
+                    </Form.Item>
+
+                    <Form.Item label="客漲" name="add_client_cost">
+                      <Input />
+                    </Form.Item>
+
+                    <Form.Item label="成漲" name="add_cost">
+                      <Input />
                     </Form.Item>
 
                     <Form.Item label="備註" name="note">

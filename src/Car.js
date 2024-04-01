@@ -9,19 +9,22 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
 
   const [carQuantity, setCarQuantity] = useState(1);
   const [quickNumbersState, setQuickNumbersState] = useState([]);
+  const [addClientCost, setAddClientCost] = useState(0);
   const [addCost, setAddCost] = useState(0);
 
   const addItem = (type, quantity) => {
     let unit = numbers.length;
     let total = 0;
     let cost = 0;
-    let carCost = Math.ceil((71.7 + addCost) * 38);
+    let carCost = Math.ceil((71.7 + parseFloat(addCost)) * 38);
 
-    if (price + addCost > 78) {
-      total = 3000;
+    if (price > 78 && addClientCost === 0) {
+      total = 3000 * quantity * unit;
     } else {
       total = Math.ceil(
-        Math.ceil(Math.ceil((price + addCost) * 38) * quantity) * unit
+        Math.ceil(
+          Math.ceil((price + parseFloat(addClientCost)) * 38) * quantity
+        ) * unit
       );
     }
 
@@ -32,7 +35,7 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
       type,
       quantity,
       unit,
-      clientCost: price + addCost,
+      clientCost: price + addClientCost,
       carCost,
       cost,
       total,
@@ -183,6 +186,7 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
   const handleReset = () => {
     setNumbers([]);
     setQuickNumbersState([]);
+    setAddClientCost(0);
     setAddCost(0);
   };
 
@@ -239,22 +243,24 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
                   alignItems: "center",
                 }}
               >
-                <div>漲價:</div>
-                <Button
-                  type="primary"
-                  icon={<MinusOutlined />}
-                  shape="circle"
-                  size="small"
-                  onClick={() => setAddCost(addCost - 1)}
-                ></Button>
-                <label style={{ fontSize: "x-large" }}>{addCost}</label>
-                <Button
-                  type="primary"
-                  icon={<PlusOutlined />}
-                  shape="circle"
-                  size="small"
-                  onClick={() => setAddCost(addCost + 1)}
-                ></Button>
+                <div>客漲:</div>
+                <input
+                  type="number"
+                  value={addClientCost}
+                  style={{ width: "50px" }}
+                  step="any"
+                  onChange={(e) => setAddClientCost(e.target.value)}
+                  placeholder="客本漲價"
+                />
+                <div>本漲:</div>
+                <input
+                  type="number"
+                  value={addCost}
+                  style={{ width: "50px" }}
+                  step="any"
+                  onChange={(e) => setAddCost(e.target.value)}
+                  placeholder="成本漲價"
+                />
               </div>
               <div>
                 <Dropdown

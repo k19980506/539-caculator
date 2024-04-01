@@ -34,7 +34,7 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
       type,
       quantity,
       unit,
-      clientCost: price + addClientCost,
+      clientCost: price + parseFloat(addClientCost),
       carCost,
       cost,
       total,

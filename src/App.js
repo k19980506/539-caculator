@@ -13,10 +13,11 @@ import {
   Col,
   Row,
 } from "antd";
-import NewLianPong from "./NewLianPong";
 import Car from "./Car";
-import NewZuPong from "./NewZuPong";
 import dayjs from "dayjs";
+import NewLianPong from "./NewLianPong";
+import NewZuPong from "./NewZuPong";
+import PriceIncrease from "./PriceIncrease";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -127,6 +128,11 @@ function App() {
           ref={zuPongRef}
         />
       ),
+    },
+    {
+      key: "4",
+      label: "漲價計算",
+      children: <PriceIncrease />,
     },
   ];
 

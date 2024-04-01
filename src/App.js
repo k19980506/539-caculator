@@ -54,9 +54,7 @@ function App() {
     };
 
     try {
-      const url = "http://localhost:8000/api/ftn_records";
-
-      await fetch(url, {
+      await fetch(process.env.REACT_APP_DOMAIN + "/api/ftn_records", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {

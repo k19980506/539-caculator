@@ -1,8 +1,7 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 import "./NewLianPong.css";
-import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { DownOutlined } from "@ant-design/icons";
-import { Button, Col, Dropdown, Input, Row, Space } from "antd";
+import { Col, Dropdown, Input, Row, Space } from "antd";
 
 const Car = forwardRef(({ f, price, totalItems }, ref) => {
   const [numbers, setNumbers] = useState([]);

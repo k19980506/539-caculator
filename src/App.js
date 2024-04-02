@@ -55,7 +55,7 @@ function App() {
     };
 
     try {
-      let api_url = "http://localhost:8000/ftn_records";
+      let api_url = "http://localhost:8000/api/ftn_records";
 
       await fetch(api_url, {
         method: "POST",

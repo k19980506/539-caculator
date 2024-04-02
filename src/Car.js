@@ -18,22 +18,22 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
     let carCost = 2725;
 
     if (price > 78) {
-      if (addClientCost === 0) {
+      if ((addClientCost || 0) === 0) {
         total = 3000 * quantity * unit;
       } else {
         total =
           3000 * quantity * unit +
-          Math.ceil(parseFloat(addClientCost) * 38 * quantity) * unit;
+          Math.ceil(parseFloat(addClientCost || 0) * 38 * quantity) * unit;
       }
     } else {
       total =
         Math.ceil(price * 38 * quantity) * unit +
-        Math.ceil(parseFloat(addClientCost) * 38 * quantity) * unit;
+        Math.ceil(parseFloat(addClientCost || 0) * 38 * quantity) * unit;
     }
 
     cost =
       Math.ceil(carCost * quantity) * unit +
-      Math.ceil(addCost * 38 * quantity) * unit;
+      Math.ceil((addCost || 0) * 38 * quantity) * unit;
 
     const newItem = {
       numbers,
@@ -44,8 +44,8 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
       carCost,
       cost,
       total,
-      addClientCost: parseFloat(addClientCost),
-      addCost: parseFloat(addCost),
+      addClientCost: parseFloat(addClientCost || 0),
+      addCost: parseFloat(addCost || 0),
     };
     f([...totalItems, newItem]);
     handleReset();
@@ -256,6 +256,7 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
                   value={addClientCost}
                   style={{ width: "50px" }}
                   step="any"
+                  min={0}
                   onChange={(e) => setAddClientCost(e.target.value)}
                   placeholder="客本漲價"
                 />
@@ -265,6 +266,7 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
                   value={addCost}
                   style={{ width: "50px" }}
                   step="any"
+                  min={0}
                   onChange={(e) => setAddCost(e.target.value)}
                   placeholder="成本漲價"
                 />

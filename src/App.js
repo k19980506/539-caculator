@@ -55,7 +55,9 @@ function App() {
     };
 
     try {
-      await fetch(process.env.REACT_APP_DOMAIN + "/api/ftn_records", {
+      let api_url = "http://localhost:8000/ftn_records";
+
+      await fetch(api_url, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -256,7 +258,9 @@ function App() {
                             <br />
                           </span>
                           <span>
-                            {`${item.clientCost} * 38 * ${item.quantity} * ${item.unit} = ${item.total}`}
+                            {item.addClientCost === 0
+                              ? `${item.clientCost} * 38 * ${item.quantity} * ${item.unit} = ${item.total}`
+                              : `${item.clientCost} * 38 * ${item.quantity} * ${item.unit} + ${item.addClientCost} * 38 * ${item.quantity} * ${item.unit}  = ${item.total}`}
                             <br />
                           </span>
                         </div>
@@ -314,7 +318,9 @@ function App() {
                             <br />
                           </span>
                           <span>
-                            {`${item.carCost} * ${item.quantity} * ${item.unit}  = ${item.cost}`}
+                            {item.addCost === 0
+                              ? `${item.carCost} * ${item.quantity} * ${item.unit}  = ${item.cost}`
+                              : `${item.carCost} * ${item.quantity} * ${item.unit} + ${item.addCost} * 38 * ${item.quantity} * ${item.unit}  = ${item.cost}`}
                             <br />
                           </span>
                         </div>

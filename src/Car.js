@@ -15,29 +15,37 @@ const Car = forwardRef(({ f, price, totalItems }, ref) => {
     let unit = numbers.length;
     let total = 0;
     let cost = 0;
-    let carCost = Math.ceil((71.7 + parseFloat(addCost)) * 38);
+    let carCost = 2725;
 
-    if (price > 78 && addClientCost === 0) {
-      total = 3000 * quantity * unit;
+    if (price > 78) {
+      if (addClientCost === 0) {
+        total = 3000 * quantity * unit;
+      } else {
+        total =
+          3000 * quantity * unit +
+          Math.ceil(parseFloat(addClientCost) * 38 * quantity) * unit;
+      }
     } else {
-      total = Math.ceil(
-        Math.ceil(
-          Math.ceil((price + parseFloat(addClientCost)) * 38) * quantity
-        ) * unit
-      );
+      total =
+        Math.ceil(price * 38 * quantity) * unit +
+        Math.ceil(parseFloat(addClientCost) * 38 * quantity) * unit;
     }
 
-    cost = Math.ceil(Math.ceil(carCost * quantity) * unit);
+    cost =
+      Math.ceil(carCost * quantity) * unit +
+      Math.ceil(addCost * 38 * quantity) * unit;
 
     const newItem = {
       numbers,
       type,
       quantity,
       unit,
-      clientCost: price + parseFloat(addClientCost),
+      clientCost: price,
       carCost,
       cost,
       total,
+      addClientCost: parseFloat(addClientCost),
+      addCost: parseFloat(addCost),
     };
     f([...totalItems, newItem]);
     handleReset();

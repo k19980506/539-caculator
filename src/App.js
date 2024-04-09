@@ -15,8 +15,8 @@ import {
 } from "antd";
 import Car from "./Car";
 import dayjs from "dayjs";
-import NewLianPong from "./NewLianPong";
-import NewZuPong from "./NewZuPong";
+import LianPong from "./LianPong";
+import ZuPong from "./ZuPong";
 import PriceIncrease from "./PriceIncrease";
 
 function App() {
@@ -42,8 +42,8 @@ function App() {
   const onFinish = async (values) => {
     const data = {
       date: values["date"].format("YYYY-MM-DD"),
-      manager: values["manager"],
-      customer: values["customer"],
+      manager: values["manager"].trim(),
+      customer: values["customer"].trim(),
       content: values["content"],
       clientCost: values["isCustomer"]
         ? totalClientCost + parseInt(values["add_client_cost"])
@@ -99,7 +99,7 @@ function App() {
       key: "1",
       label: "連碰快速",
       children: (
-        <NewLianPong
+        <LianPong
           price={parseInt(price)}
           totalItems={items}
           f={setItems}
@@ -123,7 +123,7 @@ function App() {
       key: "3",
       label: "立柱快速",
       children: (
-        <NewZuPong
+        <ZuPong
           price={parseInt(price)}
           totalItems={items}
           f={setItems}

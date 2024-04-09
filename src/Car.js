@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
-import "./NewLianPong.css";
+import "./LianPong.css";
 import { DownOutlined } from "@ant-design/icons";
 import { Col, Dropdown, Input, Row, Space } from "antd";
 

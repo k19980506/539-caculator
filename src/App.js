@@ -449,7 +449,14 @@ function App() {
                     onFinishFailed={onFinishFailed}
                     autoComplete="off"
                     onKeyDown={(e) => {
-                      e.key === "Enter" && e.preventDefault();
+                      const { tagName, type } = e.target;
+                      if (
+                        tagName !== "TEXTAREA" &&
+                        type !== "textarea" &&
+                        e.key === "Enter"
+                      ) {
+                        e.preventDefault();
+                      }
                     }}
                   >
                     <Form.Item

@@ -34,12 +34,15 @@ function App() {
   const [messageApi, contextHolder] = message.useMessage();
 
   const today = new dayjs();
+  const [loading, setLoading] = useState(false);
 
   const showModal = () => {
     setOpen(true);
   };
 
   const onFinish = async (values) => {
+    setLoading(true);
+
     const data = {
       date: values["date"].format("YYYY-MM-DD"),
       manager: values["manager"].trim(),
@@ -84,9 +87,12 @@ function App() {
         content: "發生錯誤，請檢查資料或聯絡管理人。",
       });
     }
+
+    setLoading(false);
   };
 
   const onFinishFailed = (errorInfo) => {
+    setLoading(false);
     console.log("Failed:", errorInfo);
   };
 
@@ -442,6 +448,9 @@ function App() {
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                     autoComplete="off"
+                    onKeyDown={(e) => {
+                      e.key === "Enter" && e.preventDefault();
+                    }}
                   >
                     <Form.Item
                       label="日期"
@@ -543,7 +552,11 @@ function App() {
                         span: 16,
                       }}
                     >
-                      <Button type="primary" htmlType="submit">
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        loading={loading}
+                      >
                         送出
                       </Button>
                     </Form.Item>

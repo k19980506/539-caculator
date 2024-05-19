@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import {
+  AutoComplete,
   Button,
   Checkbox,
   DatePicker,
@@ -20,6 +21,7 @@ import ZuPong from "./ZuPong";
 import PriceIncrease from "./PriceIncrease";
 
 function App() {
+  const apiDomain = "http://localhost:8000/";
   const [items, setItems] = useState([]);
   const [totalClientCost, setTotalClientCost] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
@@ -35,6 +37,18 @@ function App() {
 
   const today = new dayjs();
   const [loading, setLoading] = useState(false);
+
+  const [options, setOptions] = useState([]);
+
+  useEffect(() => {
+    fetch(`${apiDomain}/api/ftn_records/customer`)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (body) {
+        setOptions(body);
+      });
+  }, []);
 
   const showModal = () => {
     setOpen(true);
@@ -54,13 +68,11 @@ function App() {
       cost: totalCost + parseInt(values["add_cost"]),
       items: items,
       note: values["note"],
-      allowCredit: !!values["allowCredit"],
+      allow_credit: !!values["allowCredit"],
     };
 
     try {
-      let api_url = "http://localhost:8000/api/ftn_records";
-
-      await fetch(api_url, {
+      await fetch(`${apiDomain}/api/ftn_records`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -483,7 +495,6 @@ function App() {
                       ]}
                     >
                       <Select
-                        style={{ width: 120 }}
                         options={[
                           { value: "小沙", label: "小沙" },
                           { value: "星空", label: "星空" },
@@ -503,7 +514,15 @@ function App() {
                         },
                       ]}
                     >
-                      <Input />
+                      <AutoComplete
+                        placeholder="客稱"
+                        options={options}
+                        filterOption={(inputValue, option) =>
+                          option.value
+                            .toUpperCase()
+                            .indexOf(inputValue.toUpperCase()) !== -1
+                        }
+                      />
                     </Form.Item>
 
                     <Form.Item

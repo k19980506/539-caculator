@@ -21,7 +21,7 @@ import ZuPong from "./ZuPong";
 import PriceIncrease from "./PriceIncrease";
 
 function App() {
-  const apiDomain = "http://localhost:8000/";
+  const apiDomain = "http://localhost:8000";
   const [items, setItems] = useState([]);
   const [totalClientCost, setTotalClientCost] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
@@ -41,13 +41,14 @@ function App() {
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    fetch(`${apiDomain}/api/ftn_records/customer`)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (body) {
-        setOptions(body);
-      });
+    fetch(`${apiDomain}/api/ftn_records/customer`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(async (response) => {
+      setOptions(response.json());
+    });
   }, []);
 
   const showModal = () => {

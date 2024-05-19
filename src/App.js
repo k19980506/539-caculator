@@ -46,9 +46,13 @@ function App() {
       headers: {
         "Content-Type": "application/json",
       },
-    }).then(async (response) => {
-      setOptions(response.json());
-    });
+    })
+      .then(async (response) => {
+        return response.json();
+      })
+      .then((body) => {
+        setOptions(body);
+      });
   }, []);
 
   const showModal = () => {

@@ -55,9 +55,7 @@ const LianPong = forwardRef(({ f, price, totalItems }, ref) => {
     } else if (type === 23) {
       pairs = combination(unit, 2);
       triplets = combination(unit, 3);
-      total =
-        Math.ceil(price * pairs * quantity) +
-        Math.ceil(price * triplets * quantity);
+      total = Math.ceil(price * (pairs + triplets) * quantity);
       pairsCost = Math.ceil(71.7 * pairs * quantity);
       tripletsCost = Math.ceil(62.8 * triplets * quantity);
       cost = pairsCost + tripletsCost;
@@ -65,10 +63,7 @@ const LianPong = forwardRef(({ f, price, totalItems }, ref) => {
       pairs = combination(unit, 2);
       triplets = combination(unit, 3);
       quads = combination(unit, 4);
-      total =
-        Math.ceil(price * pairs * quantity) +
-        Math.ceil(price * triplets * quantity) +
-        Math.ceil(price * quads * quantity);
+      total = Math.ceil(price * (pairs + triplets + quads) * quantity);
       pairsCost = Math.ceil(71.7 * pairs * quantity);
       tripletsCost = Math.ceil(62.8 * triplets * quantity);
       quadsCost = Math.ceil(51 * quads * quantity);
@@ -76,9 +71,7 @@ const LianPong = forwardRef(({ f, price, totalItems }, ref) => {
     } else {
       triplets = combination(unit, 3);
       quads = combination(unit, 4);
-      total =
-        Math.ceil(price * triplets * quantity) +
-        Math.ceil(price * quads * quantity);
+      total = Math.ceil(price * (triplets + quads) * quantity);
       tripletsCost = Math.ceil(62.8 * triplets * quantity);
       quadsCost = Math.ceil(51 * quads * quantity);
       cost = tripletsCost + quadsCost;
